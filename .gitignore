@@ -1,0 +1,5 @@
+__pycache__
+*.swp
+auto_deploy/
+samples/
+demofile2.txt
