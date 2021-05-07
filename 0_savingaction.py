@@ -135,7 +135,7 @@ def draw_pose(cv2_im,f,framcount,xgb_model_loaded, pose, action, src_size, infer
                 (40, 80), cv2.FONT_HERSHEY_COMPLEX, 1, (0, 0, 255))
     
     
-    f.write(str(framcount) + "," + str(datetime.utcnow().strftime('%Y-%m-%d %H:%M:%S.%f'))+","+str(fullkeypoint)+","+str(action)+'"')
+    f.write(str(framcount) + "," + str(datetime.utcnow().strftime('%Y-%m-%d %H:%M:%S.%f'))+","+str(fullkeypoint)+","+str(action))
     f.write('\n')
     encoded, buffer = cv2.imencode('.jpg', cv2_im)
     jpg_as_text = base64.b64encode(buffer)
