@@ -87,108 +87,6 @@ def __init__(self, args):
         horizontal_ratio = float(args[0].horizontal_ratio)
         vertical_ratio = float(args[0].vertical_ratio)
 
-        # Check video
-        if args[0].video != "enabled" and args[0].video != "disabled":
-            print("Error: set correct video mode, enabled or disabled", flush=True)
-            sys.exit(-1)
-
-        # Check video
-        if args[0].image != "enabled" and args[0].image != "disabled":
-            print("Error: set correct image mode, enabled or disabled", flush=True)
-            sys.exit(-1)
-
-        # Convert args to boolean
-        self.use_video = True if args[0].video == "enabled" else False
-
-        self.use_image = True if args[0].image == "enabled" else False
-       
-        # Unable to use video and image mode at same time
-        if self.use_video and self.use_image:
-            print("Error: unable to use video and image mode at the same time!", flush=True)
-            sys.exit(-1)
-
-        # Unable to not use or video or image mode at same time
-        if self.use_video and self.use_image:
-            print("Error: enable or video or image mode!", flush=True)
-            sys.exit(-1)
-        
-        if self.use_video:
-            # Open video capture
-            if(args[0].stream_in=="0"):
-                self.cap = cv2.VideoCapture(1)
-            else:    
-                self.cap = cv2.VideoCapture(args[0].stream_in)
-
-            if not self.cap.isOpened():
-                print("Error: Opening video stream or file {0}".format(
-                    args[0].stream_in), flush=True)
-                sys.exit(-1)
-
-            # Get input size
-            width = int(self.cap.get(3))
-            height = int(self.cap.get(4))
-         
-            # Get image size
-            im_size = (width, height)
-            
-            #Write image
-            self.out = cv2.VideoWriter(args[0].stream_out, cv2.VideoWriter_fourcc(*args[0].encoding_codec),
-                                           int(self.cap.get(cv2.CAP_PROP_FPS)), (640, 480))
-
-            if self.out is None:
-                print("Error: Unable to open output video file {0}".format(
-                    args[0].stream_out), flush=True)
-                sys.exit(-1)
-
-        if self.use_image:
-            self.image = cv2.imread(args[0].image_in)
-            if self.image is None:
-                print("Error: Unable to open input image file {0}".format(
-                    args[0].image_in), flush=True)
-                sys.exit(-1)
-
-            self.image_out = args[0].image_out
-
-            # Get image size
-            im_size = (self.image.shape[1], self.image.shape[0])
-
-        # Compute Homograpy
-        self.homography_matrix = self.compute_homography(
-            horizontal_ratio, vertical_ratio, im_size)
-
-        self.background_masked = False
-        # Open image backgrouns, if it is necessary
-        if args[0].masked == "enabled":
-            # Set masked flag
-            self.background_masked = True
-
-            # Load static background
-            self.background_image = cv2.imread(args[0].background_in)
-
-            # Close, if no background, but required
-            if self.background_image is None:
-                print("Error: Unable to load background image (flag enabled)", flush=True)
-                sys.exit(-1)
- 
-        # Calibrate heigh value
-        self.calibrate = float(args[0].calibration)
-
-        # Actually unused
-        self.ellipse_angle = 0
-
-        # Body confidence threshold
-        self.body_th = float(args[0].body_threshold)
-
-        # Show confidence
-        self.show_confidence = True if args[0].show_confidence == "enabled" else False
-
-        # Set mask precision (mask division factor)
-        self.overlap_precision = int(args[0].overlap_precision)
-
-        # Check user value
-        self.overlap_precision = 16 if self.overlap_precision > 16 else self.overlap_precision
-
-        self.overlap_precision = 1 if self.overlap_precision < 0 else self.overlap_precision
 
 def shadow_text(dwg, x, y, text, font_size=16):
     dwg.add(dwg.text(text, insert=(x + 1, y + 1), fill='black',
@@ -197,7 +95,7 @@ def shadow_text(dwg, x, y, text, font_size=16):
                      font_size=font_size, style='font-family:sans-serif'))
 
 
-def draw_pose(cv2_im,f,framcount,xgb_model_loaded, pose, src_size, inference_box, color='yellow', threshold=0.2):
+def draw_pose(cv2_im,f,framcount,xgb_model_loaded, pose, action, src_size, inference_box, color='yellow', threshold=0.2):
     #box_x, box_y, box_w, box_h = inference_box
 
     box_x = 0
@@ -237,7 +135,7 @@ def draw_pose(cv2_im,f,framcount,xgb_model_loaded, pose, src_size, inference_box
                 (40, 80), cv2.FONT_HERSHEY_COMPLEX, 1, (0, 0, 255))
     
     
-    f.write(str(framcount) + "," + str(datetime.utcnow().strftime('%Y-%m-%d %H:%M:%S.%f'))+","+str(fullkeypoint)+",waving_hand")
+    f.write(str(framcount) + "," + str(datetime.utcnow().strftime('%Y-%m-%d %H:%M:%S.%f'))+","+str(fullkeypoint)+","+str(action)+'"')
     f.write('\n')
     encoded, buffer = cv2.imencode('.jpg', cv2_im)
     jpg_as_text = base64.b64encode(buffer)
@@ -268,7 +166,6 @@ def avg_fps_counter(window_size):
 def main():
     #default_model_dir = '../all_models'
     #default_model = 'posenet/posenet_mobilenet_v1_075_481_641_quant_decoder_edgetpu.tflite'
-    default_labels = 'hand_label.txt'
     parser = argparse.ArgumentParser()
     parser = argparse.ArgumentParser(formatter_class=argparse.ArgumentDefaultsHelpFormatter)
     parser.add_argument('--mirror', help='flip video horizontally', action='store_true')
@@ -279,7 +176,10 @@ def main():
     parser.add_argument('--camera_idx', type=str, help='Index of which video source to use. ', default = 0)
     parser.add_argument('--h264', help='Use video/x-h264 input', action='store_true')
     parser.add_argument('--jpeg', help='Use image/jpeg input', action='store_true')
+    parser.add_argument('--action', type=str, help='name of action',default='standing', required=False)
     args = parser.parse_args()
+
+
 
     default_model = 'models/mobilenet/posenet_mobilenet_v1_075_%d_%d_quant_decoder_edgetpu.tflite'
     if args.res == '480x360':
@@ -335,7 +235,7 @@ def main():
         inference_size = (input_shape[2], input_shape[1])
         print("shape",len(poses))
         if(len(poses) > 0):
-            draw_pose(cv2_im,f,framcount,xgb_model_loaded, poses[0],src_size, 0)
+            draw_pose(cv2_im,f,framcount,xgb_model_loaded, poses[0],args.action,src_size, 0)
         #for pose in poses:
         #    draw_pose(cv2_im,f,framcount, pose,src_size, 0)
 
