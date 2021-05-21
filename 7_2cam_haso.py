@@ -54,8 +54,15 @@ import multiprocessing
 from xgboost import XGBClassifier
 from sklearn.model_selection import train_test_split
 from sklearn.metrics import confusion_matrix
-
+################# Detection ################################
+from pycoral.adapters.common import input_size
+from pycoral.adapters.detect import get_objects
+from pycoral.utils.dataset import read_label_file
+from pycoral.utils.edgetpu import make_interpreter
+from pycoral.utils.edgetpu import run_inference
+########## Human Action Lib ##############
 #===========streamming======================
+
 context = zmq.Context()
 footage_socket = context.socket(zmq.PUB)
 footage_socket.connect('tcp://192.168.0.6:4664') #host - the host to view camera
@@ -155,7 +162,7 @@ class SocialDistancing:
 
     def __init__(self, args):
         # Ratio params
-        self.engine = PoseEngine(args[0].model)
+        self.engine = PoseEngine(args[0].model_pose)
         
         horizontal_ratio = float(args[0].horizontal_ratio)
         vertical_ratio = float(args[0].vertical_ratio)
@@ -264,8 +271,48 @@ class SocialDistancing:
         self.overlap_precision = 16 if self.overlap_precision > 16 else self.overlap_precision
 
         self.overlap_precision = 1 if self.overlap_precision < 0 else self.overlap_precision
-      
+        #=====================Setting Detection =========================================================
+        #self.engine = PoseEngine(args[0].model_pose)
+        self.interpreter_detection = make_interpreter(args[0].model_detection)
+        self.interpreter_detection.allocate_tensors()
+        self.labels_detection = read_label_file(args[0].labels_detection)
+        #self.inference_size_detect = input_size(self.interpreter_detection)
+        self.top_k = int(args[0].top_k)
+        self.detect_threshold = float(args[0].detect_threshold)
+    '''
+    Append object in detection
+    '''
+    def append_objs_to_img(self, cv2_im, inference_size, objs, labels):
+        height, width, channels = cv2_im.shape
+        scale_x, scale_y = width / inference_size[0], height / inference_size[1]
+        rects = []
+        chieucao = 0
+        for obj in objs:
+            bbox = obj.bbox.scale(scale_x, scale_y)
+            x0, y0 = int(bbox.xmin), int(bbox.ymin)
+            x1, y1 = int(bbox.xmax), int(bbox.ymax)
+            box = x0, y0, x1, y1
+            rects.append(box)
+            percent = int(100 * obj.score)
+            label = '{}% {}'.format(percent, labels.get(obj.id, obj.id))
+            #if (labels.get(obj.id, obj.id)=='person'):
+            #    chieucao = 180
+            if (labels.get(obj.id, obj.id)=='chair'):
+                chieucao = 60
+            if (labels.get(obj.id, obj.id)=='tv'):
+                chieucao = 40
+            calculated_height = math.sqrt(((x1 -x0)**2) + ((y1-y0)**2))*self.calibrate
 
+            distance = self.distance_to_camera(chieucao,6.6,calculated_height*0.0464)
+            distance = round(distance,2)
+            label = label + "\n" + str(distance)
+            cv2_im = cv2.rectangle(cv2_im, (x0, y0), (x1, y1), (0, 255, 0), 2)
+            for i, line in enumerate(label.split('\n')):
+                cv2_im = cv2.putText(cv2_im, line, (x0, y0+30),
+                                    cv2.FONT_HERSHEY_SIMPLEX, 1.0, (255, 0, 0), 2,cv2.LINE_AA, False)
+                y0 += 30
+        return cv2_im
+        
     '''
         Draw Skelethon
     '''
@@ -356,7 +403,7 @@ class SocialDistancing:
             #Trace dis from cam
             print("show_dis_from_cam",show_dis_from_cam)
             cv2.putText(image, ""+str(show_dis_from_cam[i][0])+"", (int(show_dis_from_cam[i][1]),int(show_dis_from_cam[i][2])),cv2.FONT_HERSHEY_SIMPLEX, 1.0, (255, 255,0), 2)
-            cv2.putText(image, ""+str(skeletal_coordinates[2][i])+"", (int(show_dis_from_cam[i][1]),int(show_dis_from_cam[i][2])),cv2.FONT_HERSHEY_SIMPLEX, 1.0, (255, 255,0), 2)
+            cv2.putText(image, ""+str(skeletal_coordinates[2][i])+"", (int(show_dis_from_cam[i][1]),int(show_dis_from_cam[i][2])+30),cv2.FONT_HERSHEY_SIMPLEX, 1.0, (255, 255,0), 2)
 
             #==================================Display Welcome Customer===============================
             if(str(skeletal_coordinates[2][i])=="['standing']"):
@@ -597,6 +644,16 @@ class SocialDistancing:
         pil_im = Image.fromarray(cv2_im_rgb)
         
         h_cap, w_cap, _ = image.shape
+
+        #============================
+        
+        self.inference_size_detect = input_size(self.interpreter_detection)
+        cv2_im_detect = cv2.resize(cv2_im_rgb, self.inference_size_detect)
+        run_inference(self.interpreter_detection, cv2_im_detect.tobytes())
+        objs = get_objects(self.interpreter_detection, self.detect_threshold)[:self.top_k]
+        print("objs", objs)
+        cv2_im_detect = self.append_objs_to_img(image, self.inference_size_detect, objs, self.labels_detection)
+        #cv2.imshow('frame', cv2_im)
         #==============FPS===================================================================
         n = 0
         sum_process_time = 0
@@ -609,6 +666,7 @@ class SocialDistancing:
         
         #poses, inference_time = self.engine.DetectPosesInImage(np.uint8(pil_im.resize((641, 481), Image.NEAREST)))
         poses, inference_time = self.engine.DetectPosesInImage(pil_im)
+        print("poses", poses)
         input_shape = self.engine.get_input_tensor_shape()
 
         
@@ -736,11 +794,11 @@ class SocialDistancing:
         while (cap1.isOpened() and cap2.isOpened()):
             # Capture from image/video
             ret1, image1 = cap1.read()
-            ret2, image2 = cap2.read()
+            #ret2, image2 = cap2.read()
             #ret3, image3 = cap3.read()
             #ret4, image4 = cap4.read()
             image1 = cv2.resize(image1,(640,480))
-            image2 = cv2.resize(image2,(640,480))
+            #image2 = cv2.resize(image2,(640,480))
             #image3 = cv2.resize(image3,(640,480))
             #image4 = cv2.resize(image4,(640,480))
             
@@ -754,34 +812,35 @@ class SocialDistancing:
                 self.mask1 = np.zeros(
                     (int(image1.shape[0]/self.overlap_precision), 
                     int(image1.shape[1]/self.overlap_precision), image1.shape[2]), dtype=np.uint8)
+                '''
                 self.mask2 = np.zeros(
                     (int(image2.shape[0]/self.overlap_precision), 
                     int(image2.shape[1]/self.overlap_precision), image2.shape[2]), dtype=np.uint8)
                 first_frame = False
-        
+                '''
             # Get openpose output
             if self.background_masked:
                 background1 = self.background_image.copy()
-                background2 = self.background_image.copy()
+                #background2 = self.background_image.copy()
                 #background3 = self.background_image.copy()
                 #background4 = self.background_image.copy()
             else:
                 background1 = image1
-                background2 = image2
+                #background2 = image2
                 #background3 = image3
                 #background4 = image4
             
             image1 = self.distances_evaluate(image1, background1,xgb_model_loaded)
-            image2 = self.distances_evaluate(image2, background2,xgb_model_loaded)
+            #image2 = self.distances_evaluate(image2, background2,xgb_model_loaded)
             #image3 = self.distances_evaluate(image3, background3,xgb_model_loaded)
             #image4 = self.distances_evaluate(image4, background4,xgb_model_loaded)
             
             
             #write image 
             #self.out.write(image)
-            
-            cv2.imshow('Social Distance', image1)
-            cv2.imshow('ABC Distance', image2)
+            image1 = cv2.resize(image1,(1280,960))
+            cv2.imshow('window', image1)
+            #cv2.imshow('ABC Distance', image2)
             #cv2.imshow('Came3 Distance', image3)
             #cv2.imshow('Cam4 Distance', image4)
             
@@ -841,13 +900,14 @@ class SocialDistancing:
 if __name__ == "__main__":
     
     default_model_dir = 'models'
-    default_model = 'mobilenet/posenet_mobilenet_v1_075_481_641_quant_decoder_edgetpu.tflite'
-    default_labels = 'hand_label.txt'
+    default_model_pose = 'mobilenet/posenet_mobilenet_v1_075_481_641_quant_decoder_edgetpu.tflite'
+    default_model_detection = 'mobilenet_ssd_v2_coco_quant_postprocess_edgetpu.tflite'
+    default_labels_detection = 'coco_labels.txt'
     # Argument parser
     parser = argparse.ArgumentParser()
     
-    parser.add_argument('--model', help='.tflite model path',
-                        default=os.path.join(default_model_dir,default_model))
+    parser.add_argument('--model_pose', help='.tflite model path',
+                        default=os.path.join(default_model_dir,default_model_pose))
     
     parser.add_argument("--video", default="disabled",
                         help="select video mode, if defined")
@@ -896,7 +956,17 @@ if __name__ == "__main__":
 
     parser.add_argument("--encoding_codec", default="XVID",
                         help="change output video encoding mode")
-    
+
+    #=========================Detection===============================================
+    parser.add_argument('--model_detection', help='.tflite model path',
+                        default=os.path.join(default_model_dir,default_model_detection))
+    parser.add_argument('--labels_detection', help='label file path',
+                        default=os.path.join(default_model_dir, default_labels_detection))
+    parser.add_argument('--top_k', type=int, default=3,
+                        help='number of categories with highest score to display')
+    parser.add_argument('--detect_threshold', type=float, default=0.1,
+                        help='classifier score threshold')
+    #=========================Detection===============================================
     # Parsing arguments
     args = parser.parse_known_args()
     
