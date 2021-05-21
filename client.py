@@ -4,7 +4,7 @@ import zmq
 import base64
 import numpy as np
 from PIL import Image
-
+'''
 context = zmq.Context()
 footage_socket = context.socket(zmq.SUB)
 footage_socket.bind('tcp://*:4664')
@@ -52,5 +52,5 @@ while True:
     #img = Image.fromarray(im_arr, 'RGB')
     print(im_arr)
     cv2.imshow("Stream", im_arr)
-'''
+
 
