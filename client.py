@@ -53,4 +53,3 @@ while True:
     print(im_arr)
     cv2.imshow("Stream", im_arr)
 
-
