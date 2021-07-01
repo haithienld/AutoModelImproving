@@ -741,7 +741,7 @@ class SocialDistancing:
         f = open("demofile2.txt", "w")
         framcount = 0
         cap1 = cv2.VideoCapture(0)
-        cap2 = cv2.VideoCapture(1)
+        #cap2 = cv2.VideoCapture(1)
         #cap3 = cv2.VideoCapture(2)
         #cap4 = cv2.VideoCapture(3)
         #============================================================================================================================
@@ -791,7 +791,7 @@ class SocialDistancing:
             
             cv2.waitKey(1)
         '''        
-        while (cap1.isOpened() and cap2.isOpened()):
+        while (cap1.isOpened()): # and cap2.isOpened()):
             # Capture from image/video
             ret1, image1 = cap1.read()
             #ret2, image2 = cap2.read()
@@ -837,7 +837,7 @@ class SocialDistancing:
             
             
             #write image 
-            #self.out.write(image)
+            self.out.write(image1)
             image1 = cv2.resize(image1,(1280,960))
             cv2.imshow('window', image1)
             #cv2.imshow('ABC Distance', image2)

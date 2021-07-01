@@ -289,6 +289,9 @@ def main():
     args = parser.parse_args()
 
     default_model = 'models/mobilenet/posenet_mobilenet_v1_075_%d_%d_quant_decoder_edgetpu.tflite'
+    default_model_detect = 'face_mask_detector_tpu.tflite'
+    default_labels = 'mask.txt'
+
     if args.res == '480x360':
         src_size = (640, 480)
         appsink_size = (480, 360)
