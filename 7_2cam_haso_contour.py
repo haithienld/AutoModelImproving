@@ -16,9 +16,9 @@ sudo apt-get install python3-edgetpu
 https://google-coral.github.io/py-repo/
 tflite_runtime-2.5.0-cp37-cp37m-linux_armv7l.whl
 '''
-import gi
-gi.require_version("Gtk", "3.0")
-from gi.repository import Gtk
+#import gi
+#gi.require_version("Gtk", "3.0")
+#from gi.repository import Gtk
 ##
 import xgboost as xgb
 import argparse
@@ -31,7 +31,7 @@ import time
 import numpy as np
 from PIL import Image
 import svgwrite
-import gstreamer
+#import gstreamer
 #####
 import sys
 import base64
