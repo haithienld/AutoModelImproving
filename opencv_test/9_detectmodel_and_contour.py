@@ -64,26 +64,58 @@ def main():
     labels = read_label_file(args.labels)
     inference_size = input_size(interpreter)
 
-    cap = cv2.VideoCapture(args.camera_idx)
+    cap = cv2.VideoCapture(args.camera_idx) # args.camera_idx "../stream_in.mp4"
     frame_count = 0
+
     while cap.isOpened():
         ret, frame = cap.read()
         if not ret:
             break
         cv2_im = frame
-        original = cv2.cvtColor(cv2_im, cv2.COLOR_BGR2GRAY)
+        original = cv2_im.copy()
+        h, w,_ = original.shape
+        original[int(h*0.1) : int(h*0.9), int(w*0.1) : int(w*0.9)] = (0,0,0)
         
-        if(frame_count > 0):
+        original = cv2.cvtColor(original, cv2.COLOR_BGR2GRAY)
+        original = cv2.resize(original, ( original.shape[1]*2, original.shape[0]*2))
+        #
+        cv2.imshow("v", original)
+        '''
+        top_image = original[0:int(h*0.1), 0:w]
+        bottom_image = original[int(h*0.9):h, 0:w]
+        left_image = original[0:h, 0:int(w*0.1)]
+        right_image = original[0:h, int(w*0.9):w]
+        cv2.imshow("top_image", top_image)
+        cv2.imshow("bottom_image", bottom_image)
+        cv2.imshow("left_image", left_image)
+        cv2.imshow("right_image", right_image)
+        '''
+        
+
+        if(frame_count %3 == 1):
             s,m = compare_images(original,lastframe)
-            print("frame_count, s,m",frame_count, s,m)
-            if(m < 0.6):
+            #print("frame_count, s,m",frame_count, s,m)
+            if(m < 0.7):
                 break
+        if(frame_count%30 == 15 or (frame_count > 0 and frame_count%30 == 0)):
+            curr = time.monotonic()
+            fps = curr-prev
+            print("fps",fps)
+            s1,m1 = compare_images(original,frame_50)
+            print("frame_count50, s1,m1",frame_count, s1,m1)
+            if(m1 < 0.7):
+                break
+            
         cv2_im_rgb = cv2.cvtColor(cv2_im, cv2.COLOR_BGR2RGB)
         cv2_im_rgb = cv2.resize(cv2_im_rgb, inference_size)
         run_inference(interpreter, cv2_im_rgb.tobytes())
         objs = get_objects(interpreter, args.threshold)[:args.top_k]
         cv2_im = append_objs_to_img(cv2_im, inference_size, objs, labels,frame_count)
         frame_count += 1
+        if(frame_count%30 == 1 or frame_count % 30 == 16):
+            prev = time.monotonic()
+            frame_50 = original
+            print("frame_count50", frame_count)
         height, width, channels = cv2_im.shape
         cv2_im = cv2.resize(cv2_im, ( width*2, height*2))
         cv2.imshow('frame', cv2_im)

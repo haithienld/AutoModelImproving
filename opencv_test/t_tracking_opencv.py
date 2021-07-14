@@ -11,9 +11,7 @@ import argparse
 import imutils
 import time
 import cv2
-from datetime import datetime
 
-#str(datetime.utcnow().strftime('%Y-%m-%d %H:%M:%S.%f'))
 
 
 
