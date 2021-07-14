@@ -91,12 +91,6 @@ def main():
         cv2.imshow("right_image", right_image)
         '''
         
-
-        if(frame_count %3 == 1):
-            s,m = compare_images(original,lastframe)
-            #print("frame_count, s,m",frame_count, s,m)
-            if(m < 0.7):
-                break
         if(frame_count%30 == 15 or (frame_count > 0 and frame_count%30 == 0)):
             curr = time.monotonic()
             fps = curr-prev
