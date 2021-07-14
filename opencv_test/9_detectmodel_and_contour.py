@@ -28,6 +28,7 @@ import os
 import base64
 import json
 import time 
+import queue
 from pycoral.adapters.common import input_size
 from pycoral.adapters.detect import get_objects
 from pycoral.utils.dataset import read_label_file
@@ -40,6 +41,7 @@ import matplotlib.pyplot as plt
 import numpy as np
 from PIL import Image
 from datetime import datetime
+from threading import Thread
 
 #str(datetime.utcnow().strftime('%Y-%m-%d %H:%M:%S.%f'))
 def main():
@@ -95,11 +97,20 @@ def main():
             curr = time.monotonic()
             fps = curr-prev
             print("fps",fps)
+            out_queue1=queue.Queue()
+            thread1 = Thread(target=compare_images, args=(original,frame_50,))
+            thread1.start()
+            my_data = my_queue.get()
+            s1,_ = my_data
+            print(float(s1))
+
+            print("thread1",out_queue1)
+            '''
             s1,m1 = compare_images(original,frame_50)
             print("frame_count50, s1,m1",frame_count, s1,m1)
             if(m1 < 0.7):
                 break
-            
+            '''
         cv2_im_rgb = cv2.cvtColor(cv2_im, cv2.COLOR_BGR2RGB)
         cv2_im_rgb = cv2.resize(cv2_im_rgb, inference_size)
         run_inference(interpreter, cv2_im_rgb.tobytes())
@@ -131,13 +142,18 @@ def mse(imageA, imageB):
     # the two images are
     return err
 
-
+my_queue = queue.Queue()
+def storeInQueue(f):
+  def wrapper(*args):
+    my_queue.put(f(*args))
+  return wrapper
+@storeInQueue
 def compare_images(imageA, imageB):
     # compute the mean squared error and structural similarity
     # index for the images
     m = mse(imageA, imageB)
     s = ssim(imageA, imageB)
-    return m,s
+    return s,m
 
 
 def save(filename,
