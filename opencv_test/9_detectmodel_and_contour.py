@@ -28,7 +28,11 @@ import os
 import base64
 import json
 import time 
-import queue
+
+import multiprocessing as mp
+#from multiprocessing import Process, Queue
+
+
 from pycoral.adapters.common import input_size
 from pycoral.adapters.detect import get_objects
 from pycoral.utils.dataset import read_label_file
@@ -97,20 +101,26 @@ def main():
             curr = time.monotonic()
             fps = curr-prev
             print("fps",fps)
-            out_queue1=queue.Queue()
-            thread1 = Thread(target=compare_images, args=(original,frame_50,))
-            thread1.start()
-            my_data = my_queue.get()
-            s1,_ = my_data
-            print(float(s1))
-
-            print("thread1",out_queue1)
+            start = time.time()
+            '''
+            p1 = mp.Process(target=compare_images, args=(original,frame_50))
+            p1.start()
+            end = time.time()
+            with_multi = end - start
+            print('Time taken WITH multiprocessing:',round(with_multi,2))
+            #d= Q.get()
+            
+            #if(d[1] < 0.7):
+            #    break
+            #print(d[0])
+            p1.join()
+            
             '''
             s1,m1 = compare_images(original,frame_50)
             print("frame_count50, s1,m1",frame_count, s1,m1)
             if(m1 < 0.7):
                 break
-            '''
+            
         cv2_im_rgb = cv2.cvtColor(cv2_im, cv2.COLOR_BGR2RGB)
         cv2_im_rgb = cv2.resize(cv2_im_rgb, inference_size)
         run_inference(interpreter, cv2_im_rgb.tobytes())
@@ -125,11 +135,14 @@ def main():
         cv2_im = cv2.resize(cv2_im, ( width*2, height*2))
         cv2.imshow('frame', cv2_im)
         lastframe = original 
+        
         if cv2.waitKey(1) & 0xFF == ord('q'):
             break
     
     cap.release()
     cv2.destroyAllWindows()
+
+
 
 def mse(imageA, imageB):
     # the 'Mean Squared Error' between the two images is the
@@ -142,17 +155,18 @@ def mse(imageA, imageB):
     # the two images are
     return err
 
-my_queue = queue.Queue()
-def storeInQueue(f):
-  def wrapper(*args):
-    my_queue.put(f(*args))
-  return wrapper
-@storeInQueue
+Q = mp.Queue()
+
+def my_func(arg):
+    Q.put('Hello, ' + arg)
+
 def compare_images(imageA, imageB):
     # compute the mean squared error and structural similarity
     # index for the images
     m = mse(imageA, imageB)
     s = ssim(imageA, imageB)
+    #if(m > 0.7):    
+    Q.put((s,m))
     return s,m
 
 
