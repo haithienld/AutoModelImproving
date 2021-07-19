@@ -1,0 +1,154 @@
+{
+  "version": "4.0.0",
+  "flags": {},
+  "shapes": [
+    {
+      "label": "Circles",
+      "points": [
+        [
+          519,
+          423
+        ],
+        [
+          583,
+          438
+        ]
+      ],
+      "group_id": null,
+      "shape_type": "rectangle",
+      "flags": {}
+    },
+    {
+      "label": "Circles",
+      "points": [
+        [
+          66,
+          348
+        ],
+        [
+          89,
+          377
+        ]
+      ],
+      "group_id": null,
+      "shape_type": "rectangle",
+      "flags": {}
+    },
+    {
+      "label": "Circles",
+      "points": [
+        [
+          116,
+          216
+        ],
+        [
+          131,
+          226
+        ]
+      ],
+      "group_id": null,
+      "shape_type": "rectangle",
+      "flags": {}
+    },
+    {
+      "label": "Rectangle",
+      "points": [
+        [
+          208,
+          50
+        ],
+        [
+          215,
+          85
+        ]
+      ],
+      "group_id": null,
+      "shape_type": "rectangle",
+      "flags": {}
+    },
+    {
+      "label": "Circles",
+      "points": [
+        [
+          283,
+          1
+        ],
+        [
+          481,
+          157
+        ]
+      ],
+      "group_id": null,
+      "shape_type": "rectangle",
+      "flags": {}
+    },
+    {
+      "label": "None",
+      "points": [
+        [
+          177,
+          1
+        ],
+        [
+          546,
+          217
+        ]
+      ],
+      "group_id": null,
+      "shape_type": "rectangle",
+      "flags": {}
+    },
+    {
+      "label": "26% bottle",
+      "points": [
+        [
+          550,
+          336
+        ],
+        [
+          578,
+          401
+        ]
+      ],
+      "group_id": null,
+      "shape_type": "rectangle",
+      "flags": {}
+    },
+    {
+      "label": "26% chair",
+      "points": [
+        [
+          430,
+          302
+        ],
+        [
+          524,
+          408
+        ]
+      ],
+      "group_id": null,
+      "shape_type": "rectangle",
+      "flags": {}
+    },
+    {
+      "label": "21% dining table",
+      "points": [
+        [
+          392,
+          369
+        ],
+        [
+          637,
+          475
+        ]
+      ],
+      "group_id": null,
+      "shape_type": "rectangle",
+      "flags": {}
+    }
+  ],
+  "imagePath": "frame120.jpg",
+  "imageData": null,
+  "imageHeight": 640,
+  "imageWidth": 480
+}

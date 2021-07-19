@@ -1,0 +1,122 @@
+{
+  "version": "4.0.0",
+  "flags": {},
+  "shapes": [
+    {
+      "label": "Rectangle",
+      "points": [
+        [
+          51,
+          320
+        ],
+        [
+          100,
+          329
+        ]
+      ],
+      "group_id": null,
+      "shape_type": "rectangle",
+      "flags": {}
+    },
+    {
+      "label": "Circles",
+      "points": [
+        [
+          613,
+          309
+        ],
+        [
+          635,
+          317
+        ]
+      ],
+      "group_id": null,
+      "shape_type": "rectangle",
+      "flags": {}
+    },
+    {
+      "label": "Circles",
+      "points": [
+        [
+          42,
+          295
+        ],
+        [
+          49,
+          339
+        ]
+      ],
+      "group_id": null,
+      "shape_type": "rectangle",
+      "flags": {}
+    },
+    {
+      "label": "Circles",
+      "points": [
+        [
+          590,
+          137
+        ],
+        [
+          640,
+          180
+        ]
+      ],
+      "group_id": null,
+      "shape_type": "rectangle",
+      "flags": {}
+    },
+    {
+      "label": "73% person",
+      "points": [
+        [
+          253,
+          89
+        ],
+        [
+          635,
+          480
+        ]
+      ],
+      "group_id": null,
+      "shape_type": "rectangle",
+      "flags": {}
+    },
+    {
+      "label": "33% chair",
+      "points": [
+        [
+          149,
+          304
+        ],
+        [
+          294,
+          478
+        ]
+      ],
+      "group_id": null,
+      "shape_type": "rectangle",
+      "flags": {}
+    },
+    {
+      "label": "21% chair",
+      "points": [
+        [
+          160,
+          297
+        ],
+        [
+          416,
+          481
+        ]
+      ],
+      "group_id": null,
+      "shape_type": "rectangle",
+      "flags": {}
+    }
+  ],
+  "imagePath": "frame180.jpg",
+  "imageData": null,
+  "imageHeight": 640,
+  "imageWidth": 480
+}

@@ -1,0 +1,122 @@
+{
+  "version": "4.0.0",
+  "flags": {},
+  "shapes": [
+    {
+      "label": "Circles",
+      "points": [
+        [
+          361,
+          333
+        ],
+        [
+          379,
+          355
+        ]
+      ],
+      "group_id": null,
+      "shape_type": "rectangle",
+      "flags": {}
+    },
+    {
+      "label": "Circles",
+      "points": [
+        [
+          85,
+          330
+        ],
+        [
+          135,
+          338
+        ]
+      ],
+      "group_id": null,
+      "shape_type": "rectangle",
+      "flags": {}
+    },
+    {
+      "label": "Circles",
+      "points": [
+        [
+          437,
+          295
+        ],
+        [
+          455,
+          327
+        ]
+      ],
+      "group_id": null,
+      "shape_type": "rectangle",
+      "flags": {}
+    },
+    {
+      "label": "Circles",
+      "points": [
+        [
+          406,
+          291
+        ],
+        [
+          429,
+          311
+        ]
+      ],
+      "group_id": null,
+      "shape_type": "rectangle",
+      "flags": {}
+    },
+    {
+      "label": "21% bottle",
+      "points": [
+        [
+          232,
+          289
+        ],
+        [
+          264,
+          340
+        ]
+      ],
+      "group_id": null,
+      "shape_type": "rectangle",
+      "flags": {}
+    },
+    {
+      "label": "21% person",
+      "points": [
+        [
+          98,
+          312
+        ],
+        [
+          138,
+          358
+        ]
+      ],
+      "group_id": null,
+      "shape_type": "rectangle",
+      "flags": {}
+    },
+    {
+      "label": "12% cup",
+      "points": [
+        [
+          381,
+          328
+        ],
+        [
+          409,
+          352
+        ]
+      ],
+      "group_id": null,
+      "shape_type": "rectangle",
+      "flags": {}
+    }
+  ],
+  "imagePath": "frame75.jpg",
+  "imageData": null,
+  "imageHeight": 640,
+  "imageWidth": 480
+}

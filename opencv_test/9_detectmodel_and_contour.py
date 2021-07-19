@@ -72,7 +72,7 @@ def main():
 
     cap = cv2.VideoCapture(args.camera_idx) # args.camera_idx "../stream_in.mp4"
     frame_count = 0
-
+    check_moving = True
     while cap.isOpened():
         ret, frame = cap.read()
         if not ret:
@@ -118,14 +118,16 @@ def main():
             '''
             s1,m1 = compare_images(original,frame_50)
             print("frame_count50, s1,m1",frame_count, s1,m1)
-            if(m1 < 0.7):
-                break
-            
+            if(s1 < 0.85):
+                check_moving = True
+                #break
+        
         cv2_im_rgb = cv2.cvtColor(cv2_im, cv2.COLOR_BGR2RGB)
         cv2_im_rgb = cv2.resize(cv2_im_rgb, inference_size)
         run_inference(interpreter, cv2_im_rgb.tobytes())
         objs = get_objects(interpreter, args.threshold)[:args.top_k]
-        cv2_im = append_objs_to_img(cv2_im, inference_size, objs, labels,frame_count)
+        cv2_im = append_objs_to_img(cv2_im, inference_size, objs, labels,frame_count,check_moving)
+        check_moving = False
         frame_count += 1
         if(frame_count%30 == 1 or frame_count % 30 == 16):
             prev = time.monotonic()
@@ -204,15 +206,15 @@ def save(filename,
             assert key not in data
             data[key] = value
         try:
-            with open("image/" + filename, "w") as f:
+            with open("images/" + filename, "w") as f:
                 json.dump(data, f, ensure_ascii=False, indent=2)
                 #filename = filename
         except Exception as e:
             raise LabelFileError(e)
-def append_objs_to_img(cv2_im, inference_size, objs, labels,frame_count):
+def append_objs_to_img(cv2_im, inference_size, objs, labels,frame_count,check_moving):
     
     shapes =[]
-    #cv2.imwrite("image/frame%d.jpg" % frame_count, cv2_im)
+    write_image = cv2_im.copy()
     #=====================contour===================
     imgContour = cv2_im.copy()
     #Convert to grayscale image
@@ -273,7 +275,9 @@ def append_objs_to_img(cv2_im, inference_size, objs, labels,frame_count):
         dict_shape_detect = {"label":label,"points":[[x0, y0],[x1, y1]],"group_id": None,"shape_type":"rectangle","flags": {}}
         shapes.append(dict(dict_shape_detect))
     #print(shapes)
-    #save("frame"+str(frame_count)+ ".json","4.0.0",shapes,"frame"+str(frame_count)+ ".jpg",640,480)
+    if check_moving == True: 
+        cv2.imwrite("images/frame%d.jpg" % frame_count, write_image)
+        save("frame"+str(frame_count)+ ".json","4.0.0",shapes,"frame"+str(frame_count)+ ".jpg",640,480)
     return cv2_im
 
 if __name__ == '__main__':

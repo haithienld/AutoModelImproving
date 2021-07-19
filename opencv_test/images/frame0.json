@@ -1,0 +1,138 @@
+{
+  "version": "4.0.0",
+  "flags": {},
+  "shapes": [
+    {
+      "label": "Rectangle",
+      "points": [
+        [
+          117,
+          317
+        ],
+        [
+          165,
+          327
+        ]
+      ],
+      "group_id": null,
+      "shape_type": "rectangle",
+      "flags": {}
+    },
+    {
+      "label": "Circles",
+      "points": [
+        [
+          27,
+          312
+        ],
+        [
+          72,
+          368
+        ]
+      ],
+      "group_id": null,
+      "shape_type": "rectangle",
+      "flags": {}
+    },
+    {
+      "label": "Circles",
+      "points": [
+        [
+          109,
+          293
+        ],
+        [
+          116,
+          335
+        ]
+      ],
+      "group_id": null,
+      "shape_type": "rectangle",
+      "flags": {}
+    },
+    {
+      "label": "Circles",
+      "points": [
+        [
+          494,
+          281
+        ],
+        [
+          640,
+          433
+        ]
+      ],
+      "group_id": null,
+      "shape_type": "rectangle",
+      "flags": {}
+    },
+    {
+      "label": "Circles",
+      "points": [
+        [
+          606,
+          243
+        ],
+        [
+          630,
+          269
+        ]
+      ],
+      "group_id": null,
+      "shape_type": "rectangle",
+      "flags": {}
+    },
+    {
+      "label": "73% person",
+      "points": [
+        [
+          23,
+          8
+        ],
+        [
+          610,
+          473
+        ]
+      ],
+      "group_id": null,
+      "shape_type": "rectangle",
+      "flags": {}
+    },
+    {
+      "label": "16% chair",
+      "points": [
+        [
+          102,
+          248
+        ],
+        [
+          172,
+          364
+        ]
+      ],
+      "group_id": null,
+      "shape_type": "rectangle",
+      "flags": {}
+    },
+    {
+      "label": "12% truck",
+      "points": [
+        [
+          471,
+          163
+        ],
+        [
+          637,
+          364
+        ]
+      ],
+      "group_id": null,
+      "shape_type": "rectangle",
+      "flags": {}
+    }
+  ],
+  "imagePath": "frame0.jpg",
+  "imageData": null,
+  "imageHeight": 640,
+  "imageWidth": 480
+}

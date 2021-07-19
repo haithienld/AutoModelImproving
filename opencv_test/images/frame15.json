@@ -1,0 +1,90 @@
+{
+  "version": "4.0.0",
+  "flags": {},
+  "shapes": [
+    {
+      "label": "Circles",
+      "points": [
+        [
+          437,
+          181
+        ],
+        [
+          475,
+          201
+        ]
+      ],
+      "group_id": null,
+      "shape_type": "rectangle",
+      "flags": {}
+    },
+    {
+      "label": "Circles",
+      "points": [
+        [
+          355,
+          117
+        ],
+        [
+          376,
+          133
+        ]
+      ],
+      "group_id": null,
+      "shape_type": "rectangle",
+      "flags": {}
+    },
+    {
+      "label": "58% chair",
+      "points": [
+        [
+          157,
+          97
+        ],
+        [
+          390,
+          369
+        ]
+      ],
+      "group_id": null,
+      "shape_type": "rectangle",
+      "flags": {}
+    },
+    {
+      "label": "26% chair",
+      "points": [
+        [
+          128,
+          104
+        ],
+        [
+          309,
+          185
+        ]
+      ],
+      "group_id": null,
+      "shape_type": "rectangle",
+      "flags": {}
+    },
+    {
+      "label": "21% chair",
+      "points": [
+        [
+          132,
+          88
+        ],
+        [
+          409,
+          281
+        ]
+      ],
+      "group_id": null,
+      "shape_type": "rectangle",
+      "flags": {}
+    }
+  ],
+  "imagePath": "frame15.jpg",
+  "imageData": null,
+  "imageHeight": 640,
+  "imageWidth": 480
+}
