@@ -6,12 +6,12 @@
       "label": "Circles",
       "points": [
         [
-          468,
-          199
+          493,
+          358
         ],
         [
-          481,
-          214
+          530,
+          396
         ]
       ],
       "group_id": null,
@@ -22,12 +22,12 @@
       "label": "Circles",
       "points": [
         [
-          127,
-          137
+          265,
+          347
         ],
         [
-          158,
-          153
+          282,
+          375
         ]
       ],
       "group_id": null,
@@ -38,11 +38,171 @@
       "label": "Circles",
       "points": [
         [
-          255,
-          123
+          139,
+          292
         ],
         [
-          272,
+          151,
+          309
+        ]
+      ],
+      "group_id": null,
+      "shape_type": "rectangle",
+      "flags": {}
+    },
+    {
+      "label": "Circles",
+      "points": [
+        [
+          111,
+          292
+        ],
+        [
+          136,
+          310
+        ]
+      ],
+      "group_id": null,
+      "shape_type": "rectangle",
+      "flags": {}
+    },
+    {
+      "label": "Circles",
+      "points": [
+        [
+          153,
+          291
+        ],
+        [
+          163,
+          309
+        ]
+      ],
+      "group_id": null,
+      "shape_type": "rectangle",
+      "flags": {}
+    },
+    {
+      "label": "Circles",
+      "points": [
+        [
+          190,
+          273
+        ],
+        [
+          210,
+          309
+        ]
+      ],
+      "group_id": null,
+      "shape_type": "rectangle",
+      "flags": {}
+    },
+    {
+      "label": "Circles",
+      "points": [
+        [
+          443,
+          263
+        ],
+        [
+          457,
+          279
+        ]
+      ],
+      "group_id": null,
+      "shape_type": "rectangle",
+      "flags": {}
+    },
+    {
+      "label": "Circles",
+      "points": [
+        [
+          403,
+          239
+        ],
+        [
+          435,
+          270
+        ]
+      ],
+      "group_id": null,
+      "shape_type": "rectangle",
+      "flags": {}
+    },
+    {
+      "label": "Circles",
+      "points": [
+        [
+          207,
+          215
+        ],
+        [
+          222,
+          227
+        ]
+      ],
+      "group_id": null,
+      "shape_type": "rectangle",
+      "flags": {}
+    },
+    {
+      "label": "Circles",
+      "points": [
+        [
+          70,
+          200
+        ],
+        [
+          90,
+          212
+        ]
+      ],
+      "group_id": null,
+      "shape_type": "rectangle",
+      "flags": {}
+    },
+    {
+      "label": "Rectangle",
+      "points": [
+        [
+          396,
+          57
+        ],
+        [
+          401,
+          91
+        ]
+      ],
+      "group_id": null,
+      "shape_type": "rectangle",
+      "flags": {}
+    },
+    {
+      "label": "None",
+      "points": [
+        [
+          452,
+          1
+        ],
+        [
+          640,
+          117
+        ]
+      ],
+      "group_id": null,
+      "shape_type": "rectangle",
+      "flags": {}
+    },
+    {
+      "label": "None",
+      "points": [
+        [
+          410,
+          1
+        ],
+        [
+          640,
           133
         ]
       ],
@@ -51,127 +211,15 @@
       "flags": {}
     },
     {
-      "label": "Circles",
-      "points": [
-        [
-          53,
-          98
-        ],
-        [
-          70,
-          109
-        ]
-      ],
-      "group_id": null,
-      "shape_type": "rectangle",
-      "flags": {}
-    },
-    {
-      "label": "Circles",
-      "points": [
-        [
-          157,
-          75
-        ],
-        [
-          177,
-          88
-        ]
-      ],
-      "group_id": null,
-      "shape_type": "rectangle",
-      "flags": {}
-    },
-    {
-      "label": "None",
-      "points": [
-        [
-          0,
-          27
-        ],
-        [
-          342,
-          177
-        ]
-      ],
-      "group_id": null,
-      "shape_type": "rectangle",
-      "flags": {}
-    },
-    {
-      "label": "Circles",
-      "points": [
-        [
-          8,
-          2
-        ],
-        [
-          33,
-          19
-        ]
-      ],
-      "group_id": null,
-      "shape_type": "rectangle",
-      "flags": {}
-    },
-    {
-      "label": "None",
-      "points": [
-        [
-          526,
-          0
-        ],
-        [
-          639,
-          196
-        ]
-      ],
-      "group_id": null,
-      "shape_type": "rectangle",
-      "flags": {}
-    },
-    {
-      "label": "Circles",
-      "points": [
-        [
-          240,
-          1
-        ],
-        [
-          466,
-          159
-        ]
-      ],
-      "group_id": null,
-      "shape_type": "rectangle",
-      "flags": {}
-    },
-    {
-      "label": "None",
-      "points": [
-        [
-          164,
-          1
-        ],
-        [
-          574,
-          245
-        ]
-      ],
-      "group_id": null,
-      "shape_type": "rectangle",
-      "flags": {}
-    },
-    {
       "label": "chair",
       "points": [
         [
-          128,
-          235
+          260,
+          361
         ],
         [
-          292,
-          392
+          364,
+          475
         ]
       ],
       "group_id": null,
@@ -179,15 +227,15 @@
       "flags": {}
     },
     {
-      "label": "chair",
+      "label": "person",
       "points": [
         [
-          0,
-          254
+          473,
+          305
         ],
         [
-          121,
-          427
+          512,
+          368
         ]
       ],
       "group_id": null,
@@ -195,14 +243,14 @@
       "flags": {}
     },
     {
-      "label": "chair",
+      "label": "dining table",
       "points": [
         [
-          477,
-          292
+          198,
+          352
         ],
         [
-          640,
+          454,
           475
         ]
       ],
@@ -211,7 +259,7 @@
       "flags": {}
     }
   ],
-  "imagePath": "frame180.jpg",
+  "imagePath": "frame274.jpg",
   "imageData": null,
   "imageHeight": 640,
   "imageWidth": 480

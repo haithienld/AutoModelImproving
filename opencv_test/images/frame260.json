@@ -6,12 +6,12 @@
       "label": "Circles",
       "points": [
         [
-          534,
-          208
+          448,
+          138
         ],
         [
-          539,
-          239
+          465,
+          149
         ]
       ],
       "group_id": null,
@@ -19,15 +19,15 @@
       "flags": {}
     },
     {
-      "label": "person",
+      "label": "train",
       "points": [
         [
-          149,
-          150
+          0,
+          16
         ],
         [
-          514,
-          480
+          633,
+          443
         ]
       ],
       "group_id": null,
@@ -35,15 +35,15 @@
       "flags": {}
     },
     {
-      "label": "chair",
+      "label": "train",
       "points": [
         [
-          12,
-          249
+          2,
+          3
         ],
         [
-          98,
-          400
+          631,
+          216
         ]
       ],
       "group_id": null,
@@ -51,15 +51,15 @@
       "flags": {}
     },
     {
-      "label": "chair",
+      "label": "bottle",
       "points": [
         [
-          396,
-          280
+          516,
+          200
         ],
         [
-          462,
-          396
+          535,
+          233
         ]
       ],
       "group_id": null,
@@ -67,7 +67,7 @@
       "flags": {}
     }
   ],
-  "imagePath": "frame4.jpg",
+  "imagePath": "frame260.jpg",
   "imageData": null,
   "imageHeight": 640,
   "imageWidth": 480

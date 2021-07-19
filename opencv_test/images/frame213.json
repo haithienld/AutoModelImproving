@@ -6,12 +6,12 @@
       "label": "Circles",
       "points": [
         [
-          468,
-          199
+          334,
+          333
         ],
         [
-          481,
-          214
+          473,
+          420
         ]
       ],
       "group_id": null,
@@ -22,12 +22,92 @@
       "label": "Circles",
       "points": [
         [
-          127,
-          137
+          395,
+          226
         ],
         [
-          158,
+          432,
+          252
+        ]
+      ],
+      "group_id": null,
+      "shape_type": "rectangle",
+      "flags": {}
+    },
+    {
+      "label": "Circles",
+      "points": [
+        [
+          434,
+          220
+        ],
+        [
+          448,
+          248
+        ]
+      ],
+      "group_id": null,
+      "shape_type": "rectangle",
+      "flags": {}
+    },
+    {
+      "label": "Rectangle",
+      "points": [
+        [
+          284,
+          174
+        ],
+        [
+          329,
+          182
+        ]
+      ],
+      "group_id": null,
+      "shape_type": "rectangle",
+      "flags": {}
+    },
+    {
+      "label": "Circles",
+      "points": [
+        [
+          532,
+          161
+        ],
+        [
+          596,
+          190
+        ]
+      ],
+      "group_id": null,
+      "shape_type": "rectangle",
+      "flags": {}
+    },
+    {
+      "label": "Circles",
+      "points": [
+        [
+          310,
+          156
+        ],
+        [
+          319,
+          172
+        ]
+      ],
+      "group_id": null,
+      "shape_type": "rectangle",
+      "flags": {}
+    },
+    {
+      "label": "Circles",
+      "points": [
+        [
+          285,
           153
+        ],
+        [
+          299,
+          170
         ]
       ],
       "group_id": null,
@@ -38,12 +118,12 @@
       "label": "Circles",
       "points": [
         [
-          255,
-          123
+          583,
+          101
         ],
         [
-          272,
-          133
+          598,
+          122
         ]
       ],
       "group_id": null,
@@ -54,12 +134,12 @@
       "label": "Circles",
       "points": [
         [
-          53,
-          98
+          484,
+          94
         ],
         [
-          70,
-          109
+          500,
+          108
         ]
       ],
       "group_id": null,
@@ -70,28 +150,12 @@
       "label": "Circles",
       "points": [
         [
-          157,
-          75
+          68,
+          94
         ],
         [
-          177,
-          88
-        ]
-      ],
-      "group_id": null,
-      "shape_type": "rectangle",
-      "flags": {}
-    },
-    {
-      "label": "None",
-      "points": [
-        [
-          0,
-          27
-        ],
-        [
-          342,
-          177
+          112,
+          125
         ]
       ],
       "group_id": null,
@@ -102,28 +166,12 @@
       "label": "Circles",
       "points": [
         [
-          8,
-          2
+          259,
+          54
         ],
         [
-          33,
-          19
-        ]
-      ],
-      "group_id": null,
-      "shape_type": "rectangle",
-      "flags": {}
-    },
-    {
-      "label": "None",
-      "points": [
-        [
-          526,
-          0
-        ],
-        [
-          639,
-          196
+          276,
+          68
         ]
       ],
       "group_id": null,
@@ -134,60 +182,12 @@
       "label": "Circles",
       "points": [
         [
-          240,
-          1
-        ],
-        [
-          466,
-          159
-        ]
-      ],
-      "group_id": null,
-      "shape_type": "rectangle",
-      "flags": {}
-    },
-    {
-      "label": "None",
-      "points": [
-        [
-          164,
-          1
-        ],
-        [
-          574,
-          245
-        ]
-      ],
-      "group_id": null,
-      "shape_type": "rectangle",
-      "flags": {}
-    },
-    {
-      "label": "chair",
-      "points": [
-        [
-          128,
-          235
-        ],
-        [
-          292,
-          392
-        ]
-      ],
-      "group_id": null,
-      "shape_type": "rectangle",
-      "flags": {}
-    },
-    {
-      "label": "chair",
-      "points": [
-        [
-          0,
-          254
+          99,
+          26
         ],
         [
           121,
-          427
+          41
         ]
       ],
       "group_id": null,
@@ -198,12 +198,44 @@
       "label": "chair",
       "points": [
         [
-          477,
-          292
+          228,
+          260
         ],
         [
-          640,
-          475
+          388,
+          428
+        ]
+      ],
+      "group_id": null,
+      "shape_type": "rectangle",
+      "flags": {}
+    },
+    {
+      "label": "chair",
+      "points": [
+        [
+          439,
+          246
+        ],
+        [
+          535,
+          385
+        ]
+      ],
+      "group_id": null,
+      "shape_type": "rectangle",
+      "flags": {}
+    },
+    {
+      "label": "tv",
+      "points": [
+        [
+          168,
+          158
+        ],
+        [
+          270,
+          251
         ]
       ],
       "group_id": null,
@@ -211,7 +243,7 @@
       "flags": {}
     }
   ],
-  "imagePath": "frame180.jpg",
+  "imagePath": "frame213.jpg",
   "imageData": null,
   "imageHeight": 640,
   "imageWidth": 480

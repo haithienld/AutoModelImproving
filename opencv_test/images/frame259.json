@@ -6,12 +6,12 @@
       "label": "Circles",
       "points": [
         [
-          534,
-          208
+          328,
+          156
         ],
         [
-          539,
-          239
+          342,
+          166
         ]
       ],
       "group_id": null,
@@ -19,15 +19,15 @@
       "flags": {}
     },
     {
-      "label": "person",
+      "label": "Circles",
       "points": [
         [
-          149,
-          150
+          450,
+          137
         ],
         [
-          514,
-          480
+          466,
+          149
         ]
       ],
       "group_id": null,
@@ -35,15 +35,15 @@
       "flags": {}
     },
     {
-      "label": "chair",
+      "label": "bottle",
       "points": [
         [
-          12,
-          249
+          516,
+          200
         ],
         [
-          98,
-          400
+          535,
+          233
         ]
       ],
       "group_id": null,
@@ -51,15 +51,31 @@
       "flags": {}
     },
     {
-      "label": "chair",
+      "label": "laptop",
       "points": [
         [
-          396,
-          280
+          0,
+          11
         ],
         [
-          462,
-          396
+          633,
+          446
+        ]
+      ],
+      "group_id": null,
+      "shape_type": "rectangle",
+      "flags": {}
+    },
+    {
+      "label": "train",
+      "points": [
+        [
+          2,
+          3
+        ],
+        [
+          631,
+          216
         ]
       ],
       "group_id": null,
@@ -67,7 +83,7 @@
       "flags": {}
     }
   ],
-  "imagePath": "frame4.jpg",
+  "imagePath": "frame259.jpg",
   "imageData": null,
   "imageHeight": 640,
   "imageWidth": 480

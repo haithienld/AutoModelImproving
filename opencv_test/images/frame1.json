@@ -6,28 +6,12 @@
       "label": "Circles",
       "points": [
         [
-          414,
-          341
-        ],
-        [
-          448,
+          10,
           372
-        ]
-      ],
-      "group_id": null,
-      "shape_type": "rectangle",
-      "flags": {}
-    },
-    {
-      "label": "Circles",
-      "points": [
-        [
-          613,
-          309
         ],
         [
-          635,
-          317
+          39,
+          381
         ]
       ],
       "group_id": null,
@@ -38,12 +22,12 @@
       "label": "Circles",
       "points": [
         [
-          15,
-          295
+          257,
+          292
         ],
         [
-          97,
-          455
+          361,
+          376
         ]
       ],
       "group_id": null,
@@ -54,12 +38,28 @@
       "label": "Circles",
       "points": [
         [
-          454,
+          250,
+          256
+        ],
+        [
+          261,
+          281
+        ]
+      ],
+      "group_id": null,
+      "shape_type": "rectangle",
+      "flags": {}
+    },
+    {
+      "label": "Circles",
+      "points": [
+        [
+          534,
           208
         ],
         [
-          548,
-          284
+          539,
+          239
         ]
       ],
       "group_id": null,
@@ -67,15 +67,15 @@
       "flags": {}
     },
     {
-      "label": "73% person",
+      "label": "person",
       "points": [
         [
-          179,
-          35
+          155,
+          153
         ],
         [
-          631,
-          473
+          518,
+          475
         ]
       ],
       "group_id": null,
@@ -83,15 +83,15 @@
       "flags": {}
     },
     {
-      "label": "21% chair",
+      "label": "chair",
       "points": [
         [
-          32,
-          254
+          12,
+          252
         ],
         [
-          100,
-          379
+          98,
+          395
         ]
       ],
       "group_id": null,
@@ -99,15 +99,15 @@
       "flags": {}
     },
     {
-      "label": "12% chair",
+      "label": "chair",
       "points": [
         [
-          147,
-          240
+          396,
+          283
         ],
         [
-          294,
-          473
+          537,
+          464
         ]
       ],
       "group_id": null,

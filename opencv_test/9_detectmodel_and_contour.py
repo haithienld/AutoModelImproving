@@ -273,7 +273,7 @@ def append_objs_to_img(cv2_im, inference_size, objs, labels,frame_count,check_mo
         cv2_im = cv2.rectangle(cv2_im, (x0, y0), (x1, y1), (0, 255, 0), 2)
         cv2_im = cv2.putText(cv2_im, label, (x0, y0+30),
                              cv2.FONT_HERSHEY_SIMPLEX, 1.0, (255, 0, 0), 2)
-        dict_shape_detect = {"label":label,"points":[[x0, y0],[x1, y1]],"group_id": None,"shape_type":"rectangle","flags": {}}
+        dict_shape_detect = {"label":labels.get(obj.id, obj.id),"points":[[x0, y0],[x1, y1]],"group_id": None,"shape_type":"rectangle","flags": {}}
         shapes.append(dict(dict_shape_detect))
     #print(shapes)
     if check_moving == True: 
