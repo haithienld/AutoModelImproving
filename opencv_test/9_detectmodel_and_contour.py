@@ -172,7 +172,8 @@ def compare_images(imageA, imageB):
     Q.put((s,m))
     return s,m
 
-
+#Save to labelme
+'''
 def save(filename,
         __version__,
         shapes,
@@ -212,10 +213,12 @@ def save(filename,
                 #filename = filename
         except Exception as e:
             raise LabelFileError(e)
+'''
 def append_objs_to_img(cv2_im, inference_size, objs, labels,frame_count,check_moving):
     
     shapes =[]
     write_image = cv2_im.copy()
+    height, width, channels = cv2_im.shape
     #=====================contour===================
     imgContour = cv2_im.copy()
     #Convert to grayscale image
@@ -257,10 +260,20 @@ def append_objs_to_img(cv2_im, inference_size, objs, labels,frame_count,check_mo
             #Draw a rectangular bounding box
             cv2_im = cv2.rectangle(cv2_im, (x, y), (x+w, y+h), color, 3) # color (0, 255, 0)
             cv2_im = cv2.putText(cv2_im, objectType, (x+(w//2)-10, y+(h//2)-10), cv2.FONT_HERSHEY_COMPLEX, 0.7, (0, 0, 0), 2)
-            dict_shape_contour = {"label":objectType,"points":[[x, y],[x+w, y+h]],"group_id": None,"shape_type":"rectangle","flags": {}}
-            shapes.append(dict(dict_shape_contour))
+            #labelme format
+            #dict_shape_contour = {"label":objectType,"points":[[x, y],[x+w, y+h]],"group_id": None,"shape_type":"rectangle","flags": {}}
+            #labelImg format
+            new_dict = {}
+            new_dict["name"] = objectType
+            new_dict["width"] = str(width)
+            new_dict["height"] = str(height)
+            new_dict["depth"] = str(channels)
+            new_dict["xmin"] = str(x)
+            new_dict["ymin"] = str(y)
+            new_dict["xmax"] = str(x+w)
+            new_dict["ymax"] = str(y+h)
+            shapes.append(dict(new_dict)) #new_dict dict_shape_contour
     #=======================================
-    height, width, channels = cv2_im.shape
     scale_x, scale_y = width / inference_size[0], height / inference_size[1]
     for obj in objs:
         bbox = obj.bbox.scale(scale_x, scale_y)
@@ -273,13 +286,81 @@ def append_objs_to_img(cv2_im, inference_size, objs, labels,frame_count,check_mo
         cv2_im = cv2.rectangle(cv2_im, (x0, y0), (x1, y1), (0, 255, 0), 2)
         cv2_im = cv2.putText(cv2_im, label, (x0, y0+30),
                              cv2.FONT_HERSHEY_SIMPLEX, 1.0, (255, 0, 0), 2)
-        dict_shape_detect = {"label":labels.get(obj.id, obj.id),"points":[[x0, y0],[x1, y1]],"group_id": None,"shape_type":"rectangle","flags": {}}
-        shapes.append(dict(dict_shape_detect))
+        #labelme format
+        #dict_shape_detect = {"label":labels.get(obj.id, obj.id),"points":[[x0, y0],[x1, y1]],"group_id": None,"shape_type":"rectangle","flags": {}}
+        new_dict = {}
+        new_dict["name"] = labels.get(obj.id, obj.id)
+        new_dict["width"] = str(width)
+        new_dict["height"] = str(height)
+        new_dict["depth"] = str(channels)
+        new_dict["xmin"] = str(x0)
+        new_dict["ymin"] = str(y0)
+        new_dict["xmax"] = str(x1)
+        new_dict["ymax"] = str(y1)
+        shapes.append(dict(new_dict)) #new_dict dict_shape_detect
     #print(shapes)
     if check_moving == True: 
         cv2.imwrite("images/frame%d.jpg" % frame_count, write_image)
-        save("frame"+str(frame_count)+ ".json","4.0.0",shapes,"frame"+str(frame_count)+ ".jpg",640,480)
+        #save to labelme
+        #save("frame"+str(frame_count)+ ".json","4.0.0",shapes,"frame"+str(frame_count)+ ".jpg",640,480)
+        filename = "frame" + str(frame_count)
+        print("filename",filename)
+        create_xml(shapes, filename)     
     return cv2_im
+
+import xml.etree.cElementTree as ET
+def create_xml(users_list,filename):
+    root = ET.Element("annotation")
+    ET.SubElement(root, "folder").text = "images" 
+    ET.SubElement(root, "filename").text = filename + ".jpg"
+    ET.SubElement(root, "path").text = "path"
+    source = ET.SubElement(root, "source")
+    ET.SubElement(source, "database").text = "unknow" #new_dict["unknow"] 
+    objects = ET.SubElement(root, "object")
+    name = ET.SubElement(objects, "name")
+    ET.SubElement(objects, "pose").text = "Unspecified"
+    size = ET.SubElement(root, "size")
+    bndbox = ET.SubElement(objects, "bndbox")
+    for user in range(len( users_list)):
+        name.text = users_list[user]["name"]
+        ET.SubElement(size, "width").text = users_list[user]["width"]
+        ET.SubElement(size, "height").text = users_list[user]["height"]
+        ET.SubElement(size, "depth").text = users_list[user]["depth"]
+        ET.SubElement(bndbox, "xmin").text = users_list[user]["xmin"]
+        ET.SubElement(bndbox, "ymin").text = users_list[user]["ymin"]
+        ET.SubElement(bndbox, "xmax").text = users_list[user]["xmax"]
+        ET.SubElement(bndbox, "ymax").text = users_list[user]["ymax"]
+        #usr = ET.SubElement(root,"usr")
+        #usr.text = str(users_list[user])
+    tree = ET.ElementTree(root)
+    tree.write("images/"+filename +".xml",encoding='utf-8', xml_declaration=True)
+
+def xml_tree(new_dict): # should I change something here???
+
+    root = ET.Element("annotation")
+    ET.SubElement(root, "folder").text = "images"
+    ET.SubElement(root, "filename").text = new_dict["filename"]
+    path = ET.SubElement(root, "path")
+    source = ET.SubElement(root, "source")
+    ET.SubElement(source, "database").text = "unknow" #new_dict["unknow"] 
+    size = ET.SubElement(root, "size") 
+    ET.SubElement(size, "width").text = new_dict["width"]
+    ET.SubElement(size, "height").text = new_dict["height"]
+    ET.SubElement(size, "depth").text = new_dict["depth"]
+    ET.SubElement(root, "segmented").text = "0"
+    objects = ET.SubElement(root, "object")
+    ET.SubElement(objects, "name").text = new_dict["name"]
+    ET.SubElement(objects, "pose").text = "Unspecified"
+    ET.SubElement(objects, "truncated").text = "0"
+    ET.SubElement(objects, "difficult").text = "0"
+    bndbox = ET.SubElement(objects, "bndbox")   
+    ET.SubElement(bndbox, "xmin").text = new_dict["xmin"]
+    ET.SubElement(bndbox, "ymin").text = new_dict["ymin"]
+    ET.SubElement(bndbox, "xmax").text = new_dict["xmax"]
+    ET.SubElement(bndbox, "ymax").text = new_dict["ymax"]
+
+    tree = ET.ElementTree(root)
+    tree.write(open('test.xml', 'a'), encoding='unicode')  
 
 if __name__ == '__main__':
     main()
