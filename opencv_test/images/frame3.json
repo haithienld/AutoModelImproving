@@ -3,15 +3,15 @@
   "flags": {},
   "shapes": [
     {
-      "label": "Circles",
+      "label": "Rectangle",
       "points": [
         [
-          249,
-          256
+          442,
+          341
         ],
         [
-          260,
-          281
+          463,
+          374
         ]
       ],
       "group_id": null,
@@ -22,12 +22,28 @@
       "label": "Circles",
       "points": [
         [
-          534,
-          208
+          127,
+          252
         ],
         [
-          539,
-          239
+          295,
+          363
+        ]
+      ],
+      "group_id": null,
+      "shape_type": "rectangle",
+      "flags": {}
+    },
+    {
+      "label": "Circles",
+      "points": [
+        [
+          20,
+          169
+        ],
+        [
+          120,
+          308
         ]
       ],
       "group_id": null,
@@ -38,12 +54,12 @@
       "label": "person",
       "points": [
         [
-          145,
-          152
+          185,
+          99
         ],
         [
-          516,
-          478
+          556,
+          472
         ]
       ],
       "group_id": null,
@@ -54,12 +70,12 @@
       "label": "chair",
       "points": [
         [
-          12,
-          251
+          21,
+          180
         ],
         [
-          98,
-          395
+          170,
+          472
         ]
       ],
       "group_id": null,
@@ -70,12 +86,12 @@
       "label": "chair",
       "points": [
         [
-          401,
-          284
+          6,
+          105
         ],
         [
-          539,
-          462
+          164,
+          425
         ]
       ],
       "group_id": null,

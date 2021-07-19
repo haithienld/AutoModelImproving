@@ -6,12 +6,12 @@
       "label": "Circles",
       "points": [
         [
-          90,
-          378
+          102,
+          450
         ],
         [
-          191,
-          406
+          116,
+          480
         ]
       ],
       "group_id": null,
@@ -22,11 +22,107 @@
       "label": "Circles",
       "points": [
         [
-          442,
+          186,
+          392
+        ],
+        [
+          223,
+          407
+        ]
+      ],
+      "group_id": null,
+      "shape_type": "rectangle",
+      "flags": {}
+    },
+    {
+      "label": "Rectangle",
+      "points": [
+        [
+          316,
+          387
+        ],
+        [
+          418,
+          470
+        ]
+      ],
+      "group_id": null,
+      "shape_type": "rectangle",
+      "flags": {}
+    },
+    {
+      "label": "Circles",
+      "points": [
+        [
+          236,
+          372
+        ],
+        [
+          246,
+          390
+        ]
+      ],
+      "group_id": null,
+      "shape_type": "rectangle",
+      "flags": {}
+    },
+    {
+      "label": "Circles",
+      "points": [
+        [
+          462,
           341
         ],
         [
-          463,
+          477,
+          355
+        ]
+      ],
+      "group_id": null,
+      "shape_type": "rectangle",
+      "flags": {}
+    },
+    {
+      "label": "Circles",
+      "points": [
+        [
+          76,
+          339
+        ],
+        [
+          191,
+          423
+        ]
+      ],
+      "group_id": null,
+      "shape_type": "rectangle",
+      "flags": {}
+    },
+    {
+      "label": "Circles",
+      "points": [
+        [
+          347,
+          289
+        ],
+        [
+          358,
+          312
+        ]
+      ],
+      "group_id": null,
+      "shape_type": "rectangle",
+      "flags": {}
+    },
+    {
+      "label": "Circles",
+      "points": [
+        [
+          285,
+          287
+        ],
+        [
+          381,
           381
         ]
       ],
@@ -38,60 +134,12 @@
       "label": "Circles",
       "points": [
         [
-          349,
-          224
+          17,
+          229
         ],
         [
-          393,
-          278
-        ]
-      ],
-      "group_id": null,
-      "shape_type": "rectangle",
-      "flags": {}
-    },
-    {
-      "label": "Circles",
-      "points": [
-        [
-          282,
-          223
-        ],
-        [
-          308,
-          257
-        ]
-      ],
-      "group_id": null,
-      "shape_type": "rectangle",
-      "flags": {}
-    },
-    {
-      "label": "Circles",
-      "points": [
-        [
-          0,
-          203
-        ],
-        [
-          70,
-          238
-        ]
-      ],
-      "group_id": null,
-      "shape_type": "rectangle",
-      "flags": {}
-    },
-    {
-      "label": "Circles",
-      "points": [
-        [
-          58,
-          170
-        ],
-        [
-          120,
-          308
+          26,
+          259
         ]
       ],
       "group_id": null,
@@ -102,12 +150,28 @@
       "label": "person",
       "points": [
         [
-          181,
-          99
+          349,
+          331
         ],
         [
-          552,
-          472
+          426,
+          462
+        ]
+      ],
+      "group_id": null,
+      "shape_type": "rectangle",
+      "flags": {}
+    },
+    {
+      "label": "tv",
+      "points": [
+        [
+          85,
+          328
+        ],
+        [
+          217,
+          401
         ]
       ],
       "group_id": null,
@@ -118,28 +182,12 @@
       "label": "chair",
       "points": [
         [
-          21,
-          179
+          298,
+          376
         ],
         [
-          166,
-          465
-        ]
-      ],
-      "group_id": null,
-      "shape_type": "rectangle",
-      "flags": {}
-    },
-    {
-      "label": "chair",
-      "points": [
-        [
-          -2,
-          262
-        ],
-        [
-          211,
-          480
+          345,
+          456
         ]
       ],
       "group_id": null,
@@ -147,7 +195,7 @@
       "flags": {}
     }
   ],
-  "imagePath": "frame1.jpg",
+  "imagePath": "frame63.jpg",
   "imageData": null,
   "imageHeight": 640,
   "imageWidth": 480
