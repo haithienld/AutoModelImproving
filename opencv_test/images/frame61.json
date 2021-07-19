@@ -3,15 +3,15 @@
   "flags": {},
   "shapes": [
     {
-      "label": "Rectangle",
+      "label": "Circles",
       "points": [
         [
-          476,
-          325
+          402,
+          222
         ],
         [
-          638,
-          364
+          413,
+          235
         ]
       ],
       "group_id": null,
@@ -22,12 +22,12 @@
       "label": "Circles",
       "points": [
         [
-          377,
-          323
+          181,
+          204
         ],
         [
-          397,
-          338
+          198,
+          214
         ]
       ],
       "group_id": null,
@@ -38,12 +38,12 @@
       "label": "Circles",
       "points": [
         [
-          159,
-          227
+          73,
+          187
         ],
         [
-          180,
-          245
+          94,
+          198
         ]
       ],
       "group_id": null,
@@ -54,12 +54,12 @@
       "label": "Circles",
       "points": [
         [
-          154,
-          197
+          284,
+          46
         ],
         [
-          174,
-          228
+          290,
+          81
         ]
       ],
       "group_id": null,
@@ -70,28 +70,12 @@
       "label": "Circles",
       "points": [
         [
-          593,
-          166
+          388,
+          1
         ],
         [
-          610,
-          194
-        ]
-      ],
-      "group_id": null,
-      "shape_type": "rectangle",
-      "flags": {}
-    },
-    {
-      "label": "Circles",
-      "points": [
-        [
-          613,
-          164
-        ],
-        [
-          631,
-          192
+          546,
+          156
         ]
       ],
       "group_id": null,
@@ -102,12 +86,12 @@
       "label": "None",
       "points": [
         [
-          217,
+          301,
           0
         ],
         [
-          449,
-          213
+          614,
+          232
         ]
       ],
       "group_id": null,
@@ -115,15 +99,15 @@
       "flags": {}
     },
     {
-      "label": "58% chair",
+      "label": "26% bottle",
       "points": [
         [
-          0,
-          315
+          279,
+          222
         ],
         [
-          87,
-          460
+          341,
+          361
         ]
       ],
       "group_id": null,
@@ -131,15 +115,15 @@
       "flags": {}
     },
     {
-      "label": "41% tv",
+      "label": "21% bottle",
       "points": [
         [
-          482,
-          233
+          345,
+          224
         ],
         [
-          642,
-          331
+          411,
+          336
         ]
       ],
       "group_id": null,
@@ -147,15 +131,15 @@
       "flags": {}
     },
     {
-      "label": "21% dining table",
+      "label": "21% bottle",
       "points": [
         [
-          300,
-          340
+          332,
+          230
         ],
         [
-          637,
-          468
+          371,
+          296
         ]
       ],
       "group_id": null,
@@ -163,7 +147,7 @@
       "flags": {}
     }
   ],
-  "imagePath": "frame75.jpg",
+  "imagePath": "frame61.jpg",
   "imageData": null,
   "imageHeight": 640,
   "imageWidth": 480

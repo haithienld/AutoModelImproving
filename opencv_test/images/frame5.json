@@ -6,12 +6,12 @@
       "label": "Circles",
       "points": [
         [
-          457,
-          74
+          419,
+          341
         ],
         [
-          527,
-          153
+          440,
+          370
         ]
       ],
       "group_id": null,
@@ -19,15 +19,15 @@
       "flags": {}
     },
     {
-      "label": "Circles",
+      "label": "Rectangle",
       "points": [
         [
-          244,
-          58
+          550,
+          207
         ],
         [
-          267,
-          77
+          556,
+          254
         ]
       ],
       "group_id": null,
@@ -35,31 +35,15 @@
       "flags": {}
     },
     {
-      "label": "26% chair",
+      "label": "73% person",
       "points": [
         [
-          89,
-          22
+          181,
+          38
         ],
         [
-          238,
-          204
-        ]
-      ],
-      "group_id": null,
-      "shape_type": "rectangle",
-      "flags": {}
-    },
-    {
-      "label": "26% chair",
-      "points": [
-        [
-          294,
-          41
-        ],
-        [
-          482,
-          316
+          618,
+          470
         ]
       ],
       "group_id": null,
@@ -70,12 +54,28 @@
       "label": "21% chair",
       "points": [
         [
-          6,
-          94
+          32,
+          254
         ],
         [
-          121,
-          232
+          100,
+          379
+        ]
+      ],
+      "group_id": null,
+      "shape_type": "rectangle",
+      "flags": {}
+    },
+    {
+      "label": "12% refrigerator",
+      "points": [
+        [
+          398,
+          0
+        ],
+        [
+          640,
+          267
         ]
       ],
       "group_id": null,
@@ -83,7 +83,7 @@
       "flags": {}
     }
   ],
-  "imagePath": "frame45.jpg",
+  "imagePath": "frame5.jpg",
   "imageData": null,
   "imageHeight": 640,
   "imageWidth": 480

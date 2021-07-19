@@ -3,15 +3,47 @@
   "flags": {},
   "shapes": [
     {
+      "label": "Circles",
+      "points": [
+        [
+          160,
+          383
+        ],
+        [
+          179,
+          402
+        ]
+      ],
+      "group_id": null,
+      "shape_type": "rectangle",
+      "flags": {}
+    },
+    {
+      "label": "Circles",
+      "points": [
+        [
+          76,
+          280
+        ],
+        [
+          88,
+          297
+        ]
+      ],
+      "group_id": null,
+      "shape_type": "rectangle",
+      "flags": {}
+    },
+    {
       "label": "Rectangle",
       "points": [
         [
-          476,
-          325
+          91,
+          279
         ],
         [
-          638,
-          364
+          101,
+          297
         ]
       ],
       "group_id": null,
@@ -22,12 +54,12 @@
       "label": "Circles",
       "points": [
         [
-          377,
-          323
+          138,
+          262
         ],
         [
-          397,
-          338
+          158,
+          274
         ]
       ],
       "group_id": null,
@@ -38,12 +70,12 @@
       "label": "Circles",
       "points": [
         [
-          159,
-          227
+          380,
+          255
         ],
         [
-          180,
-          245
+          421,
+          317
         ]
       ],
       "group_id": null,
@@ -54,12 +86,12 @@
       "label": "Circles",
       "points": [
         [
-          154,
-          197
+          346,
+          229
         ],
         [
-          174,
-          228
+          376,
+          259
         ]
       ],
       "group_id": null,
@@ -70,12 +102,12 @@
       "label": "Circles",
       "points": [
         [
-          593,
-          166
+          150,
+          202
         ],
         [
-          610,
-          194
+          165,
+          213
         ]
       ],
       "group_id": null,
@@ -86,12 +118,44 @@
       "label": "Circles",
       "points": [
         [
-          613,
-          164
+          7,
+          183
         ],
         [
-          631,
-          192
+          27,
+          196
+        ]
+      ],
+      "group_id": null,
+      "shape_type": "rectangle",
+      "flags": {}
+    },
+    {
+      "label": "Rectangle",
+      "points": [
+        [
+          340,
+          53
+        ],
+        [
+          344,
+          87
+        ]
+      ],
+      "group_id": null,
+      "shape_type": "rectangle",
+      "flags": {}
+    },
+    {
+      "label": "Circles",
+      "points": [
+        [
+          443,
+          1
+        ],
+        [
+          632,
+          152
         ]
       ],
       "group_id": null,
@@ -102,12 +166,28 @@
       "label": "None",
       "points": [
         [
-          217,
-          0
+          374,
+          1
         ],
         [
-          449,
-          213
+          640,
+          176
+        ]
+      ],
+      "group_id": null,
+      "shape_type": "rectangle",
+      "flags": {}
+    },
+    {
+      "label": "None",
+      "points": [
+        [
+          339,
+          1
+        ],
+        [
+          640,
+          187
         ]
       ],
       "group_id": null,
@@ -118,28 +198,12 @@
       "label": "58% chair",
       "points": [
         [
-          0,
-          315
+          209,
+          348
         ],
         [
-          87,
-          460
-        ]
-      ],
-      "group_id": null,
-      "shape_type": "rectangle",
-      "flags": {}
-    },
-    {
-      "label": "41% tv",
-      "points": [
-        [
-          482,
-          233
-        ],
-        [
-          642,
-          331
+          311,
+          480
         ]
       ],
       "group_id": null,
@@ -150,11 +214,27 @@
       "label": "21% dining table",
       "points": [
         [
-          300,
-          340
+          151,
+          348
         ],
         [
-          637,
+          330,
+          478
+        ]
+      ],
+      "group_id": null,
+      "shape_type": "rectangle",
+      "flags": {}
+    },
+    {
+      "label": "16% dining table",
+      "points": [
+        [
+          128,
+          353
+        ],
+        [
+          426,
           468
         ]
       ],
@@ -163,7 +243,7 @@
       "flags": {}
     }
   ],
-  "imagePath": "frame75.jpg",
+  "imagePath": "frame94.jpg",
   "imageData": null,
   "imageHeight": 640,
   "imageWidth": 480

@@ -127,7 +127,8 @@ def main():
         run_inference(interpreter, cv2_im_rgb.tobytes())
         objs = get_objects(interpreter, args.threshold)[:args.top_k]
         cv2_im = append_objs_to_img(cv2_im, inference_size, objs, labels,frame_count,check_moving)
-        check_moving = False
+        if((frame_count%30 == 5 or frame_count % 30 == 20) and check_moving == True):
+            check_moving = False
         frame_count += 1
         if(frame_count%30 == 1 or frame_count % 30 == 16):
             prev = time.monotonic()

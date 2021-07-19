@@ -3,15 +3,95 @@
   "flags": {},
   "shapes": [
     {
-      "label": "Rectangle",
+      "label": "Circles",
       "points": [
         [
-          476,
-          325
+          437,
+          371
+        ],
+        [
+          465,
+          388
+        ]
+      ],
+      "group_id": null,
+      "shape_type": "rectangle",
+      "flags": {}
+    },
+    {
+      "label": "Circles",
+      "points": [
+        [
+          465,
+          362
+        ],
+        [
+          482,
+          394
+        ]
+      ],
+      "group_id": null,
+      "shape_type": "rectangle",
+      "flags": {}
+    },
+    {
+      "label": "Circles",
+      "points": [
+        [
+          413,
+          284
+        ],
+        [
+          455,
+          313
+        ]
+      ],
+      "group_id": null,
+      "shape_type": "rectangle",
+      "flags": {}
+    },
+    {
+      "label": "Circles",
+      "points": [
+        [
+          143,
+          165
+        ],
+        [
+          229,
+          223
+        ]
+      ],
+      "group_id": null,
+      "shape_type": "rectangle",
+      "flags": {}
+    },
+    {
+      "label": "Circles",
+      "points": [
+        [
+          600,
+          163
+        ],
+        [
+          616,
+          192
+        ]
+      ],
+      "group_id": null,
+      "shape_type": "rectangle",
+      "flags": {}
+    },
+    {
+      "label": "Circles",
+      "points": [
+        [
+          620,
+          162
         ],
         [
           638,
-          364
+          190
         ]
       ],
       "group_id": null,
@@ -22,76 +102,12 @@
       "label": "Circles",
       "points": [
         [
-          377,
-          323
+          24,
+          161
         ],
         [
-          397,
-          338
-        ]
-      ],
-      "group_id": null,
-      "shape_type": "rectangle",
-      "flags": {}
-    },
-    {
-      "label": "Circles",
-      "points": [
-        [
-          159,
-          227
-        ],
-        [
-          180,
-          245
-        ]
-      ],
-      "group_id": null,
-      "shape_type": "rectangle",
-      "flags": {}
-    },
-    {
-      "label": "Circles",
-      "points": [
-        [
-          154,
-          197
-        ],
-        [
-          174,
-          228
-        ]
-      ],
-      "group_id": null,
-      "shape_type": "rectangle",
-      "flags": {}
-    },
-    {
-      "label": "Circles",
-      "points": [
-        [
-          593,
-          166
-        ],
-        [
-          610,
-          194
-        ]
-      ],
-      "group_id": null,
-      "shape_type": "rectangle",
-      "flags": {}
-    },
-    {
-      "label": "Circles",
-      "points": [
-        [
-          613,
-          164
-        ],
-        [
-          631,
-          192
+          41,
+          172
         ]
       ],
       "group_id": null,
@@ -102,12 +118,12 @@
       "label": "None",
       "points": [
         [
-          217,
+          228,
           0
         ],
         [
-          449,
-          213
+          455,
+          210
         ]
       ],
       "group_id": null,
@@ -115,15 +131,15 @@
       "flags": {}
     },
     {
-      "label": "58% chair",
+      "label": "66% chair",
       "points": [
         [
-          0,
-          315
+          2,
+          313
         ],
         [
-          87,
-          460
+          89,
+          452
         ]
       ],
       "group_id": null,
@@ -134,12 +150,12 @@
       "label": "41% tv",
       "points": [
         [
-          482,
-          233
+          484,
+          232
         ],
         [
-          642,
-          331
+          644,
+          328
         ]
       ],
       "group_id": null,
@@ -150,12 +166,12 @@
       "label": "21% dining table",
       "points": [
         [
-          300,
-          340
+          313,
+          339
         ],
         [
-          637,
-          468
+          631,
+          470
         ]
       ],
       "group_id": null,
@@ -163,7 +179,7 @@
       "flags": {}
     }
   ],
-  "imagePath": "frame75.jpg",
+  "imagePath": "frame76.jpg",
   "imageData": null,
   "imageHeight": 640,
   "imageWidth": 480

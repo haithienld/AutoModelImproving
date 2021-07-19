@@ -3,15 +3,31 @@
   "flags": {},
   "shapes": [
     {
-      "label": "Rectangle",
+      "label": "Circles",
       "points": [
         [
-          117,
+          411,
+          340
+        ],
+        [
+          434,
+          371
+        ]
+      ],
+      "group_id": null,
+      "shape_type": "rectangle",
+      "flags": {}
+    },
+    {
+      "label": "Circles",
+      "points": [
+        [
+          613,
+          309
+        ],
+        [
+          635,
           317
-        ],
-        [
-          165,
-          327
         ]
       ],
       "group_id": null,
@@ -22,60 +38,12 @@
       "label": "Circles",
       "points": [
         [
-          27,
-          312
+          19,
+          302
         ],
         [
-          72,
-          368
-        ]
-      ],
-      "group_id": null,
-      "shape_type": "rectangle",
-      "flags": {}
-    },
-    {
-      "label": "Circles",
-      "points": [
-        [
-          109,
-          293
-        ],
-        [
-          116,
-          335
-        ]
-      ],
-      "group_id": null,
-      "shape_type": "rectangle",
-      "flags": {}
-    },
-    {
-      "label": "Circles",
-      "points": [
-        [
-          494,
-          281
-        ],
-        [
-          640,
-          433
-        ]
-      ],
-      "group_id": null,
-      "shape_type": "rectangle",
-      "flags": {}
-    },
-    {
-      "label": "Circles",
-      "points": [
-        [
-          606,
-          243
-        ],
-        [
-          630,
-          269
+          97,
+          455
         ]
       ],
       "group_id": null,
@@ -86,12 +54,12 @@
       "label": "73% person",
       "points": [
         [
-          23,
-          8
+          183,
+          41
         ],
         [
-          610,
-          473
+          631,
+          476
         ]
       ],
       "group_id": null,
@@ -99,15 +67,15 @@
       "flags": {}
     },
     {
-      "label": "16% chair",
+      "label": "21% chair",
       "points": [
+        [
+          32,
+          254
+        ],
         [
           102,
-          248
-        ],
-        [
-          172,
-          364
+          379
         ]
       ],
       "group_id": null,
@@ -115,15 +83,15 @@
       "flags": {}
     },
     {
-      "label": "12% truck",
+      "label": "12% chair",
       "points": [
         [
-          471,
-          163
+          12,
+          259
         ],
         [
-          637,
-          364
+          102,
+          417
         ]
       ],
       "group_id": null,
