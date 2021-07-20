@@ -265,9 +265,6 @@ def append_objs_to_img(cv2_im, inference_size, objs, labels,frame_count,check_mo
             #labelImg format
             new_dict = {}
             new_dict["name"] = objectType
-            new_dict["width"] = str(width)
-            new_dict["height"] = str(height)
-            new_dict["depth"] = str(channels)
             new_dict["xmin"] = str(x)
             new_dict["ymin"] = str(y)
             new_dict["xmax"] = str(x+w)
@@ -290,9 +287,6 @@ def append_objs_to_img(cv2_im, inference_size, objs, labels,frame_count,check_mo
         #dict_shape_detect = {"label":labels.get(obj.id, obj.id),"points":[[x0, y0],[x1, y1]],"group_id": None,"shape_type":"rectangle","flags": {}}
         new_dict = {}
         new_dict["name"] = labels.get(obj.id, obj.id)
-        new_dict["width"] = str(width)
-        new_dict["height"] = str(height)
-        new_dict["depth"] = str(channels)
         new_dict["xmin"] = str(x0)
         new_dict["ymin"] = str(y0)
         new_dict["xmax"] = str(x1)
@@ -305,27 +299,27 @@ def append_objs_to_img(cv2_im, inference_size, objs, labels,frame_count,check_mo
         #save("frame"+str(frame_count)+ ".json","4.0.0",shapes,"frame"+str(frame_count)+ ".jpg",640,480)
         filename = "frame" + str(frame_count)
         print("filename",filename)
-        create_xml(shapes, filename)     
+        create_xml(shapes, filename,height, width, channels)     
     return cv2_im
 
 import xml.etree.cElementTree as ET
-def create_xml(users_list,filename):
+def create_xml(users_list,filename, height, width, channels):
     root = ET.Element("annotation")
     ET.SubElement(root, "folder").text = "images" 
     ET.SubElement(root, "filename").text = filename + ".jpg"
     ET.SubElement(root, "path").text = "path"
     source = ET.SubElement(root, "source")
     ET.SubElement(source, "database").text = "unknow" #new_dict["unknow"] 
-    objects = ET.SubElement(root, "object")
-    name = ET.SubElement(objects, "name")
-    ET.SubElement(objects, "pose").text = "Unspecified"
     size = ET.SubElement(root, "size")
-    bndbox = ET.SubElement(objects, "bndbox")
+    ET.SubElement(size, "height").text = str(height)
+    ET.SubElement(size, "width").text = str(height)
+    ET.SubElement(size, "depth").text = str(channels)
+    ET.SubElement(root, "segmented").text = "0"
     for user in range(len( users_list)):
-        name.text = users_list[user]["name"]
-        ET.SubElement(size, "width").text = users_list[user]["width"]
-        ET.SubElement(size, "height").text = users_list[user]["height"]
-        ET.SubElement(size, "depth").text = users_list[user]["depth"]
+        objects = ET.SubElement(root, "object")
+        ET.SubElement(objects, "name").text = users_list[user]["name"]
+        ET.SubElement(objects, "pose").text = "Unspecified"
+        bndbox = ET.SubElement(objects, "bndbox")
         ET.SubElement(bndbox, "xmin").text = users_list[user]["xmin"]
         ET.SubElement(bndbox, "ymin").text = users_list[user]["ymin"]
         ET.SubElement(bndbox, "xmax").text = users_list[user]["xmax"]
