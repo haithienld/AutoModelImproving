@@ -284,22 +284,25 @@ def append_objs_to_img(cv2_im, inference_size, objs, labels,frame_count,check_mo
         cv2_im = cv2.putText(cv2_im, label, (x0, y0+30),
                              cv2.FONT_HERSHEY_SIMPLEX, 1.0, (255, 0, 0), 2)
         #labelme format
-        #dict_shape_detect = {"label":labels.get(obj.id, obj.id),"points":[[x0, y0],[x1, y1]],"group_id": None,"shape_type":"rectangle","flags": {}}
+        dict_shape_detect = {"label":labels.get(obj.id, obj.id),"points":[[x0, y0],[x1, y1]],"group_id": None,"shape_type":"rectangle","flags": {}}
+        #labelImg format
+        '''
         new_dict = {}
         new_dict["name"] = labels.get(obj.id, obj.id)
         new_dict["xmin"] = str(x0)
         new_dict["ymin"] = str(y0)
         new_dict["xmax"] = str(x1)
         new_dict["ymax"] = str(y1)
-        shapes.append(dict(new_dict)) #new_dict dict_shape_detect
+        '''
+        shapes.append(dict(dict_shape_detect)) #new_dict dict_shape_detect
     #print(shapes)
     if check_moving == True: 
         cv2.imwrite("images/frame%d.jpg" % frame_count, write_image)
         #save to labelme
         save("frame"+str(frame_count)+ ".json","4.0.0",shapes,"frame" +str(frame_count)+ ".jpg",640,480)
-        filename = "frame" + str(frame_count)
-        print("filename",filename)
-        create_xml(shapes, filename,height, width, channels)     
+        #filename = "frame" + str(frame_count)
+        #print("filename",filename)
+        #create_xml(shapes, filename,height, width, channels)     
     return cv2_im
 '''
 import xml.etree.cElementTree as ET
