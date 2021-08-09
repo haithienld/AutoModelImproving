@@ -261,15 +261,17 @@ def append_objs_to_img(cv2_im, inference_size, objs, labels,frame_count,check_mo
             cv2_im = cv2.rectangle(cv2_im, (x, y), (x+w, y+h), color, 3) # color (0, 255, 0)
             cv2_im = cv2.putText(cv2_im, objectType, (x+(w//2)-10, y+(h//2)-10), cv2.FONT_HERSHEY_COMPLEX, 0.7, (0, 0, 0), 2)
             #labelme format
-            #dict_shape_contour = {"label":objectType,"points":[[x, y],[x+w, y+h]],"group_id": None,"shape_type":"rectangle","flags": {}}
+            dict_shape_contour = {"label":objectType,"points":[[x, y],[x+w, y+h]],"group_id": None,"shape_type":"rectangle","flags": {}}
             #labelImg format
+            '''
             new_dict = {}
             new_dict["name"] = objectType
             new_dict["xmin"] = str(x)
             new_dict["ymin"] = str(y)
             new_dict["xmax"] = str(x+w)
             new_dict["ymax"] = str(y+h)
-            shapes.append(dict(new_dict)) #new_dict dict_shape_contour
+            '''
+            shapes.append(dict(dict_shape_contour)) #new_dict dict_shape_contour
     #=======================================
     scale_x, scale_y = width / inference_size[0], height / inference_size[1]
     for obj in objs:
@@ -284,7 +286,7 @@ def append_objs_to_img(cv2_im, inference_size, objs, labels,frame_count,check_mo
         cv2_im = cv2.putText(cv2_im, label, (x0, y0+30),
                              cv2.FONT_HERSHEY_SIMPLEX, 1.0, (255, 0, 0), 2)
         #labelme format
-        dict_shape_detect = {"label":labels.get(obj.id, obj.id),"points":[[x0, y0],[x1, y1]],"group_id": None,"shape_type":"rectangle","flags": {}}
+        dict_shape_detect = {"label":label,"points":[[x0, y0],[x1, y1]],"group_id": None,"shape_type":"rectangle","flags": {}} #label labels.get(obj.id, obj.id)
         #labelImg format
         '''
         new_dict = {}
@@ -299,7 +301,7 @@ def append_objs_to_img(cv2_im, inference_size, objs, labels,frame_count,check_mo
     if check_moving == True: 
         cv2.imwrite("images/frame%d.jpg" % frame_count, write_image)
         #save to labelme
-        save("frame"+str(frame_count)+ ".json","4.0.0",shapes,"frame" +str(frame_count)+ ".jpg",640,480)
+        save("frame"+str(frame_count)+ ".json","4.5.7",shapes,"frame" +str(frame_count)+ ".jpg",640,480)
         #filename = "frame" + str(frame_count)
         #print("filename",filename)
         #create_xml(shapes, filename,height, width, channels)     
