@@ -50,24 +50,29 @@ def min_cost_matching(
         track_indices = np.arange(len(tracks))
     if detection_indices is None:
         detection_indices = np.arange(len(detections))
-
+    
     if len(detection_indices) == 0 or len(track_indices) == 0:
         return [], track_indices, detection_indices  # Nothing to match.
 
     cost_matrix = distance_metric(
         tracks, detections, track_indices, detection_indices)
     cost_matrix[cost_matrix > max_distance] = max_distance + 1e-5
-    indices = linear_assignment(cost_matrix)
-
-
+    try:
+        indices = np.asarray(linear_assignment(cost_matrix)).T
+    except:
+        print(cost_matrix)
+        print("ANH CHECK XEM SAO FEATURE NO RA INF CHU E CHIU =))))")
+        
+    
     matches, unmatched_tracks, unmatched_detections = [], [], []
     for col, detection_idx in enumerate(detection_indices):
-        if col not in indices[:, 1]:
-            unmatched_detections.append(detection_idx)
+       if col not in indices[0:, 1]:
+           unmatched_detections.append(detection_idx)
     for row, track_idx in enumerate(track_indices):
         if row not in indices[:, 0]:
             unmatched_tracks.append(track_idx)
-    for row, col in indices:
+    print(indices.tolist())
+    for row, col in indices.tolist():
         track_idx = track_indices[row]
         detection_idx = detection_indices[col]
         if cost_matrix[row, col] > max_distance:

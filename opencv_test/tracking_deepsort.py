@@ -42,6 +42,10 @@ from deep_sort.tracker import Tracker
 from tools import generate_detections as gdet
 import imutils.video
 
+
+
+from pycoral.adapters import classify
+from pycoral.adapters import common
 from pycoral.adapters.common import input_size
 from pycoral.adapters.detect import get_objects
 from pycoral.utils.dataset import read_label_file
@@ -52,7 +56,7 @@ from pycoral.utils.edgetpu import run_inference
 def main():
     default_model_dir = '../models'
     default_model = 'mobilenet_ssd_v2_coco_quant_postprocess_edgetpu.tflite'
-    default_model_extract_em ='efficientnet-edgetpu-M_quant_embedding_extractor_edgetpu.tflite'
+    default_model_extract_em = 'resnet_edgetpu.tflite'#'efficientnet-edgetpu-M_quant_embedding_extractor_edgetpu.tflite'
     default_labels = 'coco_labels.txt'
     parser = argparse.ArgumentParser()
     parser.add_argument('--model', help='.tflite model path',
@@ -68,12 +72,14 @@ def main():
                         help='classifier score threshold')
     args = parser.parse_args()
     #Definition of the parameters for tracking 
-    max_cosine_distance = 0.3
+    max_cosine_distance = 12
     nn_budget = None
     nms_max_overlap = 1.0
     
     metric = nn_matching.NearestNeighborDistanceMetric("cosine", max_cosine_distance, nn_budget)
     tracker = Tracker(metric)
+    tracking = True
+
     #
     print('Loading {} with {} labels.'.format(args.model, args.labels))
     interpreter = make_interpreter(args.model)
@@ -82,8 +88,7 @@ def main():
     inference_size = input_size(interpreter)
     interpreter_extactor = make_interpreter(args.model_extract_em, device=':0')
     interpreter_extactor.allocate_tensors()
-    test_embeddings = extract_embeddings(test_dataset['data_test'],
-                                       interpreter_extactor)
+    
     cap = cv2.VideoCapture(args.camera_idx)
 
     while cap.isOpened():
@@ -96,17 +101,42 @@ def main():
         cv2_im_rgb = cv2.resize(cv2_im_rgb, inference_size)
         run_inference(interpreter, cv2_im_rgb.tobytes())
         objs = get_objects(interpreter, args.threshold)[:args.top_k]
-        cv2_im,boxes,scores,classes,features = append_objs_to_img(cv2_im, inference_size, objs, labels)
-        print("boxes",boxes)
-        print("classes",classes)
-        print("features",features)
-        detections = [Detection(bbox, confidence, clss, feature) for bbox, confidence, clss, feature in
+        cv2_im,boxes,scores,classes,features = append_objs_to_img(cv2_im,interpreter_extactor, inference_size, objs, labels)
+        print("boxes",len(boxes))
+        print("classes",len(classes))
+        print("features",len(features))
+        detections = [Detection(bbox, confidence, clss, feature[0]) for bbox, confidence, clss, feature in
                       zip(boxes, scores, classes, features)]
+        for det in detections:
+            bbox = det.to_tlbr()
+            print("bbox",bbox)
+            score = "%.2f" % round(det.confidence * 100, 2) + "%"
+            cv2.rectangle(frame, (int(bbox[0]), int(bbox[1])), (int(bbox[2]), int(bbox[3])), (255, 0, 0), 2)
+            if len(classes) > 0:
+                cls = det.cls
+                cv2.putText(frame, str(cls) + " " + score, (int(bbox[0]), int(bbox[3])), 0,
+                            1e-3 * frame.shape[0], (0, 255, 0), 1)
+
         #indices = preprocessing.non_max_suppression(boxes, nms_max_overlap, scores)
         #detections = [detections[i] for i in indices]
         print("detections",detections)
         
+        if tracking:
+            # Call the tracker
+            tracker.predict()
+            tracker.update(detections)
 
+            for track in tracker.tracks:
+                if not track.is_confirmed() or track.time_since_update > 1:
+                    continue
+                bbox = track.to_tlbr()
+                cv2.rectangle(frame, (int(bbox[0]), int(bbox[1])), (int(bbox[2]), int(bbox[3])), (255, 255, 255), 2)
+                cv2.putText(frame, "ID: " + str(track.track_id), (int(bbox[0]), int(bbox[1])), 0,
+                            1e-3 * frame.shape[0], (0, 255, 0), 1)
+
+        #cv2.imshow('', frame)
+        height, width, channels = cv2_im.shape
+        cv2_im = cv2.resize(cv2_im, (width *3,height*3))
         cv2.imshow('frame', cv2_im)
         if cv2.waitKey(1) & 0xFF == ord('q'):
             break
@@ -114,71 +144,32 @@ def main():
     cap.release()
     cv2.destroyAllWindows()
 
-def extract_image_patch(image, bbox, patch_shape):
-    """Extract image patch from bounding box.
-    Parameters
-    ----------
-    image : ndarray
-        The full image.
-    bbox : array_like
-        The bounding box in format (x, y, width, height).
-    patch_shape : Optional[array_like]
-        This parameter can be used to enforce a desired patch shape
-        (height, width). First, the `bbox` is adapted to the aspect ratio
-        of the patch shape, then it is clipped at the image boundaries.
-        If None, the shape is computed from :arg:`bbox`.
-    Returns
-    -------
-    ndarray | NoneType
-        An image patch showing the :arg:`bbox`, optionally reshaped to
-        :arg:`patch_shape`.
-        Returns None if the bounding box is empty or fully outside of the image
-        boundaries.
+
+def extract_embeddings(img, interpreter):
+    """Uses model to process images as embeddings.
+    Reads image, resizes and feeds to model to get feature embeddings. Original
+    image is discarded to keep maximum memory consumption low.
+    Args:
+        image_paths: ndarray, represents a list of image paths.
+        interpreter: TFLite interpreter, wraps embedding extractor model.
+    Returns:
+        ndarray of length image_paths.shape[0] of embeddings.
     """
-    bbox = np.array(bbox)
-    if patch_shape is not None:
-        # correct aspect ratio to patch shape
-        target_aspect = float(patch_shape[1]) / patch_shape[0]
-        new_width = target_aspect * bbox[3]
-        bbox[0] -= (new_width - bbox[2]) / 2
-        bbox[2] = new_width
+    input_size = common.input_size(interpreter)
+    feature_dim = classify.num_classes(interpreter)
 
-    # convert to top left, bottom right
-    bbox[2:] += bbox[:2]
-    bbox = bbox.astype(np.int)
+    embeddings = np.empty((1, feature_dim), dtype=np.float32)
+    print("embeddings",embeddings,feature_dim)
+    #embeddings[0,:] = classify.get_scores(interpreter)
+    #print("embeddings1",embeddings)
+    #common.set_input(interpreter, img.resize(input_size, Image.NEAREST))
+    #interpreter.invoke()
+    #embeddings[count,:] = classify.get_scores(interpreter)
+    
+    return embeddings
 
-    # clip at image boundaries
-    bbox[:2] = np.maximum(0, bbox[:2])
-    bbox[2:] = np.minimum(np.asarray(image.shape[:2][::-1]) - 1, bbox[2:])
-    if np.any(bbox[:2] >= bbox[2:]):
-        return None
-    sx, sy, ex, ey = bbox
-    image = image[sy:ey, sx:ex]
-    image = cv2.resize(image, tuple(patch_shape[::-1]))
-    return image
-
-def extract_embeddings(image_paths, interpreter):
-  """Uses model to process images as embeddings.
-  Reads image, resizes and feeds to model to get feature embeddings. Original
-  image is discarded to keep maximum memory consumption low.
-  Args:
-    image_paths: ndarray, represents a list of image paths.
-    interpreter: TFLite interpreter, wraps embedding extractor model.
-  Returns:
-    ndarray of length image_paths.shape[0] of embeddings.
-  """
-  input_size = common.input_size(interpreter)
-  feature_dim = classify.num_classes(interpreter)
-  embeddings = np.empty((len(image_paths), feature_dim), dtype=np.float32)
-  for idx, path in enumerate(image_paths):
-    with test_image(path) as img:
-      common.set_input(interpreter, img.resize(input_size, Image.NEAREST))
-      interpreter.invoke()
-      embeddings[idx, :] = classify.get_scores(interpreter)
-
-  return embeddings
-
-def append_objs_to_img(cv2_im, inference_size, objs, labels):
+def append_objs_to_img(cv2_im,interpreter_extactor, inference_size, objs, labels):
+    features = [] #!
     image_patches = [] #1
     boxes = []
     scores = []
@@ -187,15 +178,16 @@ def append_objs_to_img(cv2_im, inference_size, objs, labels):
     scale_x, scale_y = width / inference_size[0], height / inference_size[1]
     for obj in objs: #0.1
         bbox = obj.bbox.scale(scale_x, scale_y)
-        patch = extract_image_patch(cv2_im, bbox, cv2_im.shape[:2])
-        if patch is None:
-            print("WARNING: Failed to extract image patch: %s." % str(box))
-            patch = np.random.uniform(0., 255., cv2_im.shape).astype(np.uint8)
-            image_patches.append(patch)
+        
         #end1
         x0, y0 = int(bbox.xmin), int(bbox.ymin)
         x1, y1 = int(bbox.xmax), int(bbox.ymax)
-
+        #print("x0, y0,x1, y1",(x0/scale_x)/inference_size[0], (y0/scale_y)/inference_size[1],(x1/scale_x)/inference_size[0], (y1/scale_y)/inference_size[1])
+        #cv2.imshow('frame_cut', cv2_im[y0:y1, x0:x1])
+        feature = extract_embeddings(cv2_im[y0:y1, x0:x1], interpreter_extactor)
+        #print("feature",feature)
+        features.append(feature)
+        
         percent = int(100 * obj.score)
         label = '{}% {}'.format(percent, labels.get(obj.id, obj.id))
         boxes.append(bbox)
@@ -204,7 +196,7 @@ def append_objs_to_img(cv2_im, inference_size, objs, labels):
         cv2_im = cv2.rectangle(cv2_im, (x0, y0), (x1, y1), (0, 255, 0), 2)
         cv2_im = cv2.putText(cv2_im, label, (x0, y0+30),
                              cv2.FONT_HERSHEY_SIMPLEX, 1.0, (255, 0, 0), 2)
-    return cv2_im,np.array(boxes),np.array(scores),np.array(classes),np.array(image_patches)
+    return cv2_im,np.array(boxes),np.array(scores),np.array(classes),np.array(features)
 
 if __name__ == '__main__':
     main()
