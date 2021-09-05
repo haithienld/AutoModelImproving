@@ -79,13 +79,14 @@ def main():
             break
         cv2_im = frame
         original = cv2_im.copy()
+        cv2.imshow("input frame", original)
         h, w,_ = original.shape
         original[int(h*0.1) : int(h*0.9), int(w*0.1) : int(w*0.9)] = (0,0,0)
         
         original = cv2.cvtColor(original, cv2.COLOR_BGR2GRAY)
         original = cv2.resize(original, ( original.shape[1]*2, original.shape[0]*2))
         #
-        cv2.imshow("v", original)
+        cv2.imshow("compare_area", original)
         '''
         top_image = original[0:int(h*0.1), 0:w]
         bottom_image = original[int(h*0.9):h, 0:w]
@@ -208,7 +209,7 @@ def save(filename,
             assert key not in data
             data[key] = value
         try:
-            with open("images/" + filename, "w") as f:
+            with open("images_me/" + filename, "w") as f:
                 json.dump(data, f, ensure_ascii=False, indent=2)
                 #filename = filename
         except Exception as e:
@@ -281,25 +282,25 @@ def append_objs_to_img(cv2_im, inference_size, objs, labels,frame_count,check_mo
 
         percent = int(100 * obj.score)
         label = '{}% {}'.format(percent, labels.get(obj.id, obj.id))
-
-        cv2_im = cv2.rectangle(cv2_im, (x0, y0), (x1, y1), (0, 255, 0), 2)
-        cv2_im = cv2.putText(cv2_im, label, (x0, y0+30),
-                             cv2.FONT_HERSHEY_SIMPLEX, 1.0, (255, 0, 0), 2)
-        #labelme format
-        dict_shape_detect = {"label":label,"points":[[x0, y0],[x1, y1]],"group_id": None,"shape_type":"rectangle","flags": {}} #label labels.get(obj.id, obj.id)
-        #labelImg format
-        '''
-        new_dict = {}
-        new_dict["name"] = labels.get(obj.id, obj.id)
-        new_dict["xmin"] = str(x0)
-        new_dict["ymin"] = str(y0)
-        new_dict["xmax"] = str(x1)
-        new_dict["ymax"] = str(y1)
-        '''
-        shapes.append(dict(dict_shape_detect)) #new_dict dict_shape_detect
+        if(percent <50):
+            cv2_im = cv2.rectangle(cv2_im, (x0, y0), (x1, y1), (0, 255, 0), 2)
+            cv2_im = cv2.putText(cv2_im, label, (x0, y0+30),
+                                cv2.FONT_HERSHEY_SIMPLEX, 1.0, (255, 0, 0), 2)
+            #labelme format
+            dict_shape_detect = {"label":label,"points":[[x0, y0],[x1, y1]],"group_id": None,"shape_type":"rectangle","flags": {}} #label labels.get(obj.id, obj.id)
+            #labelImg format
+            '''
+            new_dict = {}
+            new_dict["name"] = labels.get(obj.id, obj.id)
+            new_dict["xmin"] = str(x0)
+            new_dict["ymin"] = str(y0)
+            new_dict["xmax"] = str(x1)
+            new_dict["ymax"] = str(y1)
+            '''
+            shapes.append(dict(dict_shape_detect)) #new_dict dict_shape_detect
     #print(shapes)
     if check_moving == True: 
-        cv2.imwrite("images/frame%d.jpg" % frame_count, write_image)
+        cv2.imwrite("images_me/frame%d.jpg" % frame_count, write_image)
         #save to labelme
         save("frame"+str(frame_count)+ ".json","4.5.7",shapes,"frame" +str(frame_count)+ ".jpg",640,480)
         #filename = "frame" + str(frame_count)
@@ -310,7 +311,7 @@ def append_objs_to_img(cv2_im, inference_size, objs, labels,frame_count,check_mo
 import xml.etree.cElementTree as ET
 def create_xml(users_list,filename, height, width, channels):
     root = ET.Element("annotation")
-    ET.SubElement(root, "folder").text = "images" 
+    ET.SubElement(root, "folder").text = "images_me" 
     ET.SubElement(root, "filename").text = filename + ".jpg"
     ET.SubElement(root, "path").text = "path"
     source = ET.SubElement(root, "source")
@@ -332,12 +333,12 @@ def create_xml(users_list,filename, height, width, channels):
         #usr = ET.SubElement(root,"usr")
         #usr.text = str(users_list[user])
     tree = ET.ElementTree(root)
-    tree.write("images/"+filename +".xml",encoding='utf-8', xml_declaration=True)
+    tree.write(images_me/"+filename +".xml",encoding='utf-8', xml_declaration=True)
 
 def xml_tree(new_dict): # should I change something here???
 
     root = ET.Element("annotation")
-    ET.SubElement(root, "folder").text = "images"
+    ET.SubElement(root, "folder").text = "images_me"
     ET.SubElement(root, "filename").text = new_dict["filename"]
     path = ET.SubElement(root, "path")
     source = ET.SubElement(root, "source")
