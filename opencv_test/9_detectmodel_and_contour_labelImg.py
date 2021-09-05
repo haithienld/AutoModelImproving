@@ -71,6 +71,7 @@ def main():
     inference_size = input_size(interpreter)
 
     cap = cv2.VideoCapture(args.camera_idx) # args.camera_idx "../stream_in.mp4"
+    out = cv2.VideoWriter(str(datetime.utcnow().strftime('%Y-%m-%d %H:%M:%S.%f'))+'.mp4',cv2.VideoWriter_fourcc('M','J','P','G'), 10, (640,480))
     frame_count = 0
     check_moving = True
     while cap.isOpened():
@@ -79,6 +80,7 @@ def main():
             break
         cv2_im = frame
         original = cv2_im.copy()
+        out.write(cv2_im)
         cv2.imshow("input frame", original)
         h, w,_ = original.shape
         original[int(h*0.1) : int(h*0.9), int(w*0.1) : int(w*0.9)] = (0,0,0)
