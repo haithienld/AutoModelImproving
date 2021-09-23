@@ -56,7 +56,7 @@ from pycoral.utils.edgetpu import run_inference
 def main():
     default_model_dir = '../models'
     default_model = 'mobilenet_ssd_v2_coco_quant_postprocess_edgetpu.tflite'
-    default_model_extract_em = 'test_Thien.tflite' #'resnet_edgetpu.tflite'#'efficientnet-edgetpu-M_quant_embedding_extractor_edgetpu.tflite'
+    default_model_extract_em = 'resnet_edgetpu.tflite' #'resnet_edgetpu.tflite'#'efficientnet-edgetpu-M_quant_embedding_extractor_edgetpu.tflite'
     default_labels = 'coco_labels.txt'
     parser = argparse.ArgumentParser()
     parser.add_argument('--model', help='.tflite model path',

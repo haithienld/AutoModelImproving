@@ -49,14 +49,20 @@ def _cosine_distance(a, b, data_is_normalized=False):
 
     """
     if not data_is_normalized:
-        a = np.asarray(a) / np.linalg.norm(a, axis=1, keepdims=True)
+        a = np.asarray(a,dtype=np.float64) / np.linalg.norm(a, axis=1, keepdims=True)
         
 
-        b = np.asarray(b) / np.linalg.norm(b, axis=1, keepdims=True)
+        b = np.asarray(b,dtype=np.float64) / np.linalg.norm(b, axis=1, keepdims=True)
         
     return 1. - np.dot(a, b.T)
 
-
+'''
+def norm(v):
+  sum = float(0)
+  for i in range(len(v)):
+    sum += v[i]**2
+  return sum**(0.5)
+'''
 def _nn_euclidean_distance(x, y):
     """ Helper function for nearest neighbor distance metric (Euclidean).
 

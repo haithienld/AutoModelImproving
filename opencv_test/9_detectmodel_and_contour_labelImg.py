@@ -69,18 +69,18 @@ def main():
     interpreter.allocate_tensors()
     labels = read_label_file(args.labels)
     inference_size = input_size(interpreter)
-
-    cap = cv2.VideoCapture(args.camera_idx) # args.camera_idx "../stream_in.mp4"
+    cap = cv2.VideoCapture("../basicvideo_Trim.mp4") # args.camera_idx "../stream_in.mp4"
     out = cv2.VideoWriter(str(datetime.utcnow().strftime('%Y-%m-%d %H:%M:%S.%f'))+'.mp4',cv2.VideoWriter_fourcc('M','J','P','G'), 10, (640,480))
     frame_count = 0
     check_moving = True
+    total_miss_object = 0
     while cap.isOpened():
+        print(frame_count)
         ret, frame = cap.read()
         if not ret:
             break
         cv2_im = frame
         original = cv2_im.copy()
-        out.write(cv2_im)
         cv2.imshow("input frame", original)
         h, w,_ = original.shape
         original[int(h*0.1) : int(h*0.9), int(w*0.1) : int(w*0.9)] = (0,0,0)
@@ -100,7 +100,7 @@ def main():
         cv2.imshow("right_image", right_image)
         '''
         
-        if(frame_count%30 == 15 or (frame_count > 0 and frame_count%30 == 0)):
+        if(frame_count%30 == 15 or (frame_count > 0 and frame_count%30 == 0)): #if(frame_count%50 == 49): # if(frame_count%30 == 15 or (frame_count > 0 and frame_count%30 == 0)):
             curr = time.monotonic()
             fps = curr-prev
             print("fps",fps)
@@ -129,17 +129,24 @@ def main():
         cv2_im_rgb = cv2.resize(cv2_im_rgb, inference_size)
         run_inference(interpreter, cv2_im_rgb.tobytes())
         objs = get_objects(interpreter, args.threshold)[:args.top_k]
-        cv2_im = append_objs_to_img(cv2_im, inference_size, objs, labels,frame_count,check_moving)
-        if((frame_count%30 == 5 or frame_count % 30 == 20) and check_moving == True):
+        cv2_im,count_miss_object = append_objs_to_img(cv2_im, inference_size, objs, labels,frame_count,check_moving)
+        total_miss_object +=count_miss_object
+        print("total_miss_object",total_miss_object)
+        if((frame_count%30 == 5 or frame_count % 30 == 20) and check_moving == True): #if(frame_count%50 == 5 and frame_count > 0 and check_moving == True): #if((frame_count%30 == 5 or frame_count % 30 == 20) and check_moving == True):
             check_moving = False
         frame_count += 1
-        if(frame_count%30 == 1 or frame_count % 30 == 16):
+        if(frame_count%30 == 1 or frame_count % 30 == 16): #if(frame_count%50 == 1): #if(frame_count%30 == 1 or frame_count % 30 == 16):
             prev = time.monotonic()
             frame_50 = original
             print("frame_count50", frame_count)
+        
+        out.write(cv2_im)
+
         height, width, channels = cv2_im.shape
         cv2_im = cv2.resize(cv2_im, ( width*2, height*2))
+        
         cv2.imshow('frame', cv2_im)
+        
         lastframe = original 
         
         if cv2.waitKey(1) & 0xFF == ord('q'):
@@ -231,6 +238,7 @@ def append_objs_to_img(cv2_im, inference_size, objs, labels,frame_count,check_mo
     #edge detection 
     imgCanny = cv2.Canny(imgBlur, 50, 50)
     contours, hierarchy = cv2.findContours(imgCanny, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_NONE)
+    count_miss_object = 0
     for cnt in contours:
         color1 = (list(np.random.choice(range(256), size=3)))  
         color =[int(color1[0]), int(color1[1]), int(color1[2])]  
@@ -302,8 +310,9 @@ def append_objs_to_img(cv2_im, inference_size, objs, labels,frame_count,check_mo
         #save("frame"+str(frame_count)+ ".json","4.0.0",shapes,"frame"+str(frame_count)+ ".jpg",640,480)
         filename = "frame" + str(frame_count)
         print("filename",filename)
-        create_xml(shapes, filename,height, width, channels)     
-    return cv2_im
+        create_xml(shapes, filename,height, width, channels) 
+        count_miss_object = len(shapes)    
+    return cv2_im,count_miss_object
 
 import xml.etree.cElementTree as ET
 def create_xml(users_list,filename, height, width, channels):
